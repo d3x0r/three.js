@@ -15,9 +15,32 @@ THREE.Vector4 = function ( x, y, z, w ) {
 
 };
 
+THREE.Vector4Pool = {
+	new : function(x,y,z,w) {
+		var r = vector4Pool.pop();
+		if( r ) {
+			r.x = x || 0;
+			r.y = y || 0;
+			r.z = z || 0;
+			r.w = w || 1;
+		}
+		else{
+			r = new THREE.Vector4(x,y,z,w);
+		}
+		return r;
+	}
+}
+
+var vector4Pool = [];
+
 THREE.Vector4.prototype = {
 
 	constructor: THREE.Vector4,
+
+	delete : function() {
+		vector4Pool.push( this );
+		return this;
+	},
 
 	set: function ( x, y, z, w ) {
 

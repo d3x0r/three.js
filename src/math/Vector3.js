@@ -15,9 +15,31 @@ THREE.Vector3 = function ( x, y, z ) {
 
 };
 
+THREE.Vector3Pool = {
+	new : function(x,y,z) {
+		var r = vectorPool.pop();
+		if( r ) {
+			r.x = x;
+			r.y = y;
+			r.z = z;
+		}
+		else{
+			r = new THREE.Vector3(x,y,z);
+		}
+		return r;
+	}
+}
+
+var vectorPool = [];
+
 THREE.Vector3.prototype = {
 
 	constructor: THREE.Vector3,
+
+	delete : function() {
+		vectorPool.push( this );
+		return this;
+	},
 
 	set: function ( x, y, z ) {
 
@@ -91,7 +113,7 @@ THREE.Vector3.prototype = {
 
 	clone: function () {
 
-		return new this.constructor( this.x, this.y, this.z );
+		return THREE.Vector3Pool.new( this.x, this.y, this.z );
 
 	},
 
@@ -783,10 +805,10 @@ THREE.Vector3.prototype = {
 THREE.Vector3Unit = new THREE.Vector3( 1, 1, 1 );
 THREE.Vector3Zero = new THREE.Vector3( 0, 0, 0 );
 THREE.Vector3Right = new THREE.Vector3( -1, 0, 0 );
-THREE.Vector3Backward = new THREE.Vector3( 0, 0, 1 );
+THREE.Vector3Backward = new THREE.Vector3( 0, 0, -1 );
 THREE.Vector3Up = new THREE.Vector3( 0, 1, 0 );
 THREE.Vector3Left = new THREE.Vector3( 1, 0, 0 );
-THREE.Vector3Forward = new THREE.Vector3( 0, 0, -1 );
+THREE.Vector3Forward = new THREE.Vector3( 0, 0, 1 );
 THREE.Vector3Down = new THREE.Vector3( 0, -1, 0 );
 
 ["Vector3Unit"
