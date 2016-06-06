@@ -36,7 +36,11 @@ THREE.Matrix4 = function () {
                 mass : 1.0,
                 move : function( m, delta ) {
 					this.speed.addScaledVector( this.acceleration, delta );
-					m.origin.addScaledVector( this.speed, delta );
+					var del = this.speed.clone().multiplyScalar( delta );
+
+					m.origin.addScaledVector( m.forward, del.z );
+					m.origin.addScaledVector( m.up, del.y );
+					m.origin.addScaledVector( m.left, del.x );
 
 					this.rotation.addScaledVector( this.torque, delta );
 
@@ -1183,10 +1187,11 @@ THREE.Matrix4.prototype = {
 			return new THREE.Vector3( -this.elements[8], -this.elements[9], -this.elements[10] );
         },
 
-	move : function (x,y,z) {
+	move : function (tick) {
         	if( this.motion )
-				this.motion.move();
-        	this.origin.addScaledVector( this.forward, z ).addScaledVector( this.up, y ).addScaledVector( this.left, x ) },
+				this.motion.move( this, tick );
+        	//this.origin.addScaledVector( this.forward, z ).addScaledVector( this.up, y ).addScaledVector( this.left, x )
+		},
 	moveNow : function ( x,y,z ) { this.origin.addScaledVector( this.forward, z ).addScaledVector( this.up, y ).addScaledVector( this.left, x ) },
 	moveForward : function ( n ) { this.origin.addScaledVector( this.forward, n ); },
 	moveUp : function ( n ) { this.origin.addScaledVector( this.up, n ); },

@@ -1922,9 +1922,31 @@ THREE.Vector3 = function ( x, y, z ) {
 
 };
 
+THREE.Vector3Pool = {
+	new : function(x,y,z) {
+		var r = vectorPool.pop();
+		if( r ) {
+			r.x = x;
+			r.y = y;
+			r.z = z;
+		}
+		else{
+			r = new THREE.Vector3(x,y,z);
+		}
+		return r;
+	}
+}
+
+var vectorPool = [];
+
 THREE.Vector3.prototype = {
 
 	constructor: THREE.Vector3,
+
+	delete : function() {
+		vectorPool.push( this );
+		return this;
+	},
 
 	set: function ( x, y, z ) {
 
@@ -1998,7 +2020,7 @@ THREE.Vector3.prototype = {
 
 	clone: function () {
 
-		return new this.constructor( this.x, this.y, this.z );
+		return THREE.Vector3Pool.new( this.x, this.y, this.z );
 
 	},
 
@@ -2690,10 +2712,10 @@ THREE.Vector3.prototype = {
 THREE.Vector3Unit = new THREE.Vector3( 1, 1, 1 );
 THREE.Vector3Zero = new THREE.Vector3( 0, 0, 0 );
 THREE.Vector3Right = new THREE.Vector3( -1, 0, 0 );
-THREE.Vector3Backward = new THREE.Vector3( 0, 0, 1 );
+THREE.Vector3Backward = new THREE.Vector3( 0, 0, -1 );
 THREE.Vector3Up = new THREE.Vector3( 0, 1, 0 );
 THREE.Vector3Left = new THREE.Vector3( 1, 0, 0 );
-THREE.Vector3Forward = new THREE.Vector3( 0, 0, -1 );
+THREE.Vector3Forward = new THREE.Vector3( 0, 0, 1 );
 THREE.Vector3Down = new THREE.Vector3( 0, -1, 0 );
 
 ["Vector3Unit"
@@ -2729,9 +2751,32 @@ THREE.Vector4 = function ( x, y, z, w ) {
 
 };
 
+THREE.Vector4Pool = {
+	new : function(x,y,z,w) {
+		var r = vector4Pool.pop();
+		if( r ) {
+			r.x = x || 0;
+			r.y = y || 0;
+			r.z = z || 0;
+			r.w = w || 1;
+		}
+		else{
+			r = new THREE.Vector4(x,y,z,w);
+		}
+		return r;
+	}
+}
+
+var vector4Pool = [];
+
 THREE.Vector4.prototype = {
 
 	constructor: THREE.Vector4,
+
+	delete : function() {
+		vector4Pool.push( this );
+		return this;
+	},
 
 	set: function ( x, y, z, w ) {
 
@@ -4826,6 +4871,63 @@ THREE.Matrix4 = function () {
 	this.origin = new THREE.Vector3();
 	Object.defineProperty(this, "origin", { writable:false } );
 
+	this.motion = null;
+        this.motion = {
+        	tick : 0,
+        	speed : new THREE.Vector3(),
+                acceleration : new THREE.Vector3(),
+                rotation : new THREE.Vector3(),
+                torque : new THREE.Vector3(),
+                mass : 1.0,
+                move : function( m, delta ) {
+					this.speed.addScaledVector( this.acceleration, delta );
+					var del = this.speed.clone().multiplyScalar( delta );
+
+					m.origin.addScaledVector( m.forward, del.z );
+					m.origin.addScaledVector( m.up, del.y );
+					m.origin.addScaledVector( m.left, del.x );
+
+					this.rotation.addScaledVector( this.torque, delta );
+
+					m.rotateRelative( this.rotation.x, this.rotation.y, this.rotation.z );
+				}
+					// delta = delta / 1000;
+					/*
+					   ** this is becoming a physics engine frame...
+					   ** might as well just add that.
+                	var delta_accel = this.acceleration.clone().scale(delta);
+					if( ( this.rotation.x > ( Math.PI / 4 ) )
+					   ||( this.rotation.x < -( Math.PI / 4 ) )
+					   ||( this.rotation.y > ( Math.PI / 4 ) )
+					   ||( this.rotation.y < -( Math.PI / 4 ) )
+					   ||( this.rotation.z > ( Math.PI / 4 ) )
+					   ||( this.rotation.z < -( Math.PI / 4 ) )
+					   ){
+						   var max = this.rotation.x;
+						   if( max < this.rotation.y )
+						   	 max = this.rotation.y;
+						   if( max < this.rotation.z )
+						     max = this.rotation.z;
+						 var min = this.rotation.x;
+  						   if( min > this.rotation.y )
+  						   	 max = this.rotation.y;
+  						   if( min > this.rotation.z )
+  						     max = this.rotation.z;
+							if( min < 0 )
+								if( max < -min )
+									max = -min;
+							var t;
+							for( t = 1; t < 100; t++ )
+								if( ( max / t ) < ( Math.PI / 4 ))
+									break;
+
+							delta_accel.scale( 1 / t );
+					   }
+					  */
+
+        };
+
+
 	this.tick = 0;
 
 	if ( arguments.length > 0 ) {
@@ -5871,9 +5973,9 @@ THREE.Matrix4.prototype = {
 		}
     },
 	Translate: function(x,y,z) {
-			this.origin.x = x;
-			this.origin.y = y;
-			this.origin.z = z;
+			this.origin.x += x;
+			this.origin.y += y;
+			this.origin.z += z;
 	},
 	rotateRelative: function( x, y, z ){
 		//console.trace( "rotate starts as ", this )
@@ -5929,6 +6031,19 @@ THREE.Matrix4.prototype = {
 	get backward() {
 			return new THREE.Vector3( -this.elements[8], -this.elements[9], -this.elements[10] );
         },
+
+	move : function (tick) {
+        	if( this.motion )
+				this.motion.move( this, tick );
+        	//this.origin.addScaledVector( this.forward, z ).addScaledVector( this.up, y ).addScaledVector( this.left, x )
+		},
+	moveNow : function ( x,y,z ) { this.origin.addScaledVector( this.forward, z ).addScaledVector( this.up, y ).addScaledVector( this.left, x ) },
+	moveForward : function ( n ) { this.origin.addScaledVector( this.forward, n ); },
+	moveUp : function ( n ) { this.origin.addScaledVector( this.up, n ); },
+	moveLeft : function ( n ) { this.origin.addScaledVector( this.left, n ); },
+	moveBackward : function ( n ) { this.origin.addScaledVector( this.backward, n ); },
+	moveDown : function ( n ) { this.origin.addScaledVector( this.down, n ); },
+	moveRight : function ( n ) { this.origin.addScaledVector( this.right, n ); },
 
 	get inv_left() {
         	return new THREE.Vector3( this.elements[0], this.elements[4], this.elements[8] );
