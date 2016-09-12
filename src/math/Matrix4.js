@@ -1,3 +1,6 @@
+import { _Math } from './Math';
+import { Vector3 } from './Vector3';
+
 /**
  * @author mrdoob / http://mrdoob.com/
  * @author supereggbert / http://www.paulbrunt.co.uk/
@@ -11,7 +14,7 @@
  * @author WestLangley / http://github.com/WestLangley
  */
 
-THREE.Matrix4 = function () {
+function Matrix4() {
 
 	this.elements = new Float32Array( [
 
@@ -34,11 +37,13 @@ THREE.Matrix4 = function () {
 
 	}
 
-};
+}
 
-THREE.Matrix4.prototype = {
+Matrix4.prototype = {
 
-	constructor: THREE.Matrix4,
+	constructor: Matrix4,
+
+	isMatrix4: true,
 
 	set: function ( n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, n34, n41, n42, n43, n44 ) {
 
@@ -70,7 +75,7 @@ THREE.Matrix4.prototype = {
 
 	clone: function () {
 
-		return new THREE.Matrix4().copy( this );
+		return new Matrix4().copy( this );
 
 	},
 
@@ -118,9 +123,9 @@ THREE.Matrix4.prototype = {
 
 		var v1;
 
-		return function ( m ) {
+		return function extractRotation( m ) {
 
-			if ( v1 === undefined ) v1 = new THREE.Vector3();
+			if ( v1 === undefined ) v1 = new Vector3();
 
 			var te = this.elements;
 			var me = m.elements;
@@ -149,7 +154,7 @@ THREE.Matrix4.prototype = {
 
 	makeRotationFromEuler: function ( euler ) {
 
-		if ( euler instanceof THREE.Euler === false ) {
+		if ( (euler && euler.isEuler) === false ) {
 
 			console.error( 'THREE.Matrix: .makeRotationFromEuler() now expects a Euler rotation rather than a Vector3 and order.' );
 
@@ -316,13 +321,13 @@ THREE.Matrix4.prototype = {
 
 		var x, y, z;
 
-		return function ( eye, target, up ) {
+		return function lookAt( eye, target, up ) {
 
 			if ( x === undefined ) {
 
-				x = new THREE.Vector3();
-				y = new THREE.Vector3();
-				z = new THREE.Vector3();
+				x = new Vector3();
+				y = new Vector3();
+				z = new Vector3();
 
 			}
 
@@ -449,9 +454,9 @@ THREE.Matrix4.prototype = {
 
 		var v1;
 
-		return function ( array, offset, length ) {
+		return function applyToVector3Array( array, offset, length ) {
 
-			if ( v1 === undefined ) v1 = new THREE.Vector3();
+			if ( v1 === undefined ) v1 = new Vector3();
 			if ( offset === undefined ) offset = 0;
 			if ( length === undefined ) length = array.length;
 
@@ -475,7 +480,7 @@ THREE.Matrix4.prototype = {
 
 		return function applyToBuffer( buffer, offset, length ) {
 
-			if ( v1 === undefined ) v1 = new THREE.Vector3();
+			if ( v1 === undefined ) v1 = new Vector3();
 			if ( offset === undefined ) offset = 0;
 			if ( length === undefined ) length = buffer.length / buffer.itemSize;
 
@@ -577,9 +582,9 @@ THREE.Matrix4.prototype = {
 
 		var v1;
 
-		return function () {
+		return function getPosition() {
 
-			if ( v1 === undefined ) v1 = new THREE.Vector3();
+			if ( v1 === undefined ) v1 = new Vector3();
 			console.warn( 'THREE.Matrix4: .getPosition() has been removed. Use Vector3.setFromMatrixPosition( matrix ) instead.' );
 
 			return v1.setFromMatrixColumn( this, 3 );
@@ -622,7 +627,7 @@ THREE.Matrix4.prototype = {
 
 			var msg = "THREE.Matrix4.getInverse(): can't invert matrix, determinant is 0";
 
-			if ( throwOnDegenerate || false ) {
+			if ( throwOnDegenerate === true ) {
 
 				throw new Error( msg );
 
@@ -806,12 +811,12 @@ THREE.Matrix4.prototype = {
 
 		var vector, matrix;
 
-		return function ( position, quaternion, scale ) {
+		return function decompose( position, quaternion, scale ) {
 
 			if ( vector === undefined ) {
 
-				vector = new THREE.Vector3();
-				matrix = new THREE.Matrix4();
+				vector = new Vector3();
+				matrix = new Matrix4();
 
 			}
 
@@ -887,7 +892,7 @@ THREE.Matrix4.prototype = {
 
 	makePerspective: function ( fov, aspect, near, far ) {
 
-		var ymax = near * Math.tan( THREE.Math.DEG2RAD * fov * 0.5 );
+		var ymax = near * Math.tan( _Math.DEG2RAD * fov * 0.5 );
 		var ymin = - ymax;
 		var xmin = ymin * aspect;
 		var xmax = ymax * aspect;
@@ -1163,3 +1168,6 @@ THREE.Matrix4.prototype = {
 	},
 
 };
+
+
+export { Matrix4 };
