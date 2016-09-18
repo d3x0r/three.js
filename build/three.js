@@ -187,132 +187,6 @@ Object.assign( EventDispatcher.prototype, {
 
 } );
 
-var REVISION = '80';
-var MOUSE = { LEFT: 0, MIDDLE: 1, RIGHT: 2 };
-var CullFaceNone = 0;
-var CullFaceBack = 1;
-var CullFaceFront = 2;
-var CullFaceFrontBack = 3;
-var FrontFaceDirectionCW = 0;
-var FrontFaceDirectionCCW = 1;
-var BasicShadowMap = 0;
-var PCFShadowMap = 1;
-var PCFSoftShadowMap = 2;
-var FrontSide = 0;
-var BackSide = 1;
-var DoubleSide = 2;
-var FlatShading = 1;
-var SmoothShading = 2;
-var NoColors = 0;
-var FaceColors = 1;
-var VertexColors = 2;
-var NoBlending = 0;
-var NormalBlending = 1;
-var AdditiveBlending = 2;
-var SubtractiveBlending = 3;
-var MultiplyBlending = 4;
-var CustomBlending = 5;
-var AddEquation = 100;
-var SubtractEquation = 101;
-var ReverseSubtractEquation = 102;
-var MinEquation = 103;
-var MaxEquation = 104;
-var ZeroFactor = 200;
-var OneFactor = 201;
-var SrcColorFactor = 202;
-var OneMinusSrcColorFactor = 203;
-var SrcAlphaFactor = 204;
-var OneMinusSrcAlphaFactor = 205;
-var DstAlphaFactor = 206;
-var OneMinusDstAlphaFactor = 207;
-var DstColorFactor = 208;
-var OneMinusDstColorFactor = 209;
-var SrcAlphaSaturateFactor = 210;
-var NeverDepth = 0;
-var AlwaysDepth = 1;
-var LessDepth = 2;
-var LessEqualDepth = 3;
-var EqualDepth = 4;
-var GreaterEqualDepth = 5;
-var GreaterDepth = 6;
-var NotEqualDepth = 7;
-var MultiplyOperation = 0;
-var MixOperation = 1;
-var AddOperation = 2;
-var NoToneMapping = 0;
-var LinearToneMapping = 1;
-var ReinhardToneMapping = 2;
-var Uncharted2ToneMapping = 3;
-var CineonToneMapping = 4;
-var UVMapping = 300;
-var CubeReflectionMapping = 301;
-var CubeRefractionMapping = 302;
-var EquirectangularReflectionMapping = 303;
-var EquirectangularRefractionMapping = 304;
-var SphericalReflectionMapping = 305;
-var CubeUVReflectionMapping = 306;
-var CubeUVRefractionMapping = 307;
-var RepeatWrapping = 1000;
-var ClampToEdgeWrapping = 1001;
-var MirroredRepeatWrapping = 1002;
-var NearestFilter = 1003;
-var NearestMipMapNearestFilter = 1004;
-var NearestMipMapLinearFilter = 1005;
-var LinearFilter = 1006;
-var LinearMipMapNearestFilter = 1007;
-var LinearMipMapLinearFilter = 1008;
-var UnsignedByteType = 1009;
-var ByteType = 1010;
-var ShortType = 1011;
-var UnsignedShortType = 1012;
-var IntType = 1013;
-var UnsignedIntType = 1014;
-var FloatType = 1015;
-var HalfFloatType = 1016;
-var UnsignedShort4444Type = 1017;
-var UnsignedShort5551Type = 1018;
-var UnsignedShort565Type = 1019;
-var UnsignedInt248Type = 1020;
-var AlphaFormat = 1021;
-var RGBFormat = 1022;
-var RGBAFormat = 1023;
-var LuminanceFormat = 1024;
-var LuminanceAlphaFormat = 1025;
-var RGBEFormat = RGBAFormat;
-var DepthFormat = 1026;
-var DepthStencilFormat = 1027;
-var RGB_S3TC_DXT1_Format = 2001;
-var RGBA_S3TC_DXT1_Format = 2002;
-var RGBA_S3TC_DXT3_Format = 2003;
-var RGBA_S3TC_DXT5_Format = 2004;
-var RGB_PVRTC_4BPPV1_Format = 2100;
-var RGB_PVRTC_2BPPV1_Format = 2101;
-var RGBA_PVRTC_4BPPV1_Format = 2102;
-var RGBA_PVRTC_2BPPV1_Format = 2103;
-var RGB_ETC1_Format = 2151;
-var LoopOnce = 2200;
-var LoopRepeat = 2201;
-var LoopPingPong = 2202;
-var InterpolateDiscrete = 2300;
-var InterpolateLinear = 2301;
-var InterpolateSmooth = 2302;
-var ZeroCurvatureEnding = 2400;
-var ZeroSlopeEnding = 2401;
-var WrapAroundEnding = 2402;
-var TrianglesDrawMode = 0;
-var TriangleStripDrawMode = 1;
-var TriangleFanDrawMode = 2;
-var LinearEncoding = 3000;
-var sRGBEncoding = 3001;
-var GammaEncoding = 3007;
-var RGBEEncoding = 3002;
-var LogLuvEncoding = 3003;
-var RGBM7Encoding = 3004;
-var RGBM16Encoding = 3005;
-var RGBDEncoding = 3006;
-var BasicDepthPacking = 3200;
-var RGBADepthPacking = 3201;
-
 /**
  * @author alteredq / http://alteredqualia.com/
  * @author mrdoob / http://mrdoob.com/
@@ -480,773 +354,6 @@ exports.Math = {
 
 /**
  * @author mrdoob / http://mrdoob.com/
- * @author philogb / http://blog.thejit.org/
- * @author egraether / http://egraether.com/
- * @author zz85 / http://www.lab4games.net/zz85/blog
- */
-
-function Vector2( x, y ) {
-
-	this.x = x || 0;
-	this.y = y || 0;
-
-}
-
-Vector2.prototype = {
-
-	constructor: Vector2,
-
-	isVector2: true,
-
-	get width() {
-
-		return this.x;
-
-	},
-
-	set width( value ) {
-
-		this.x = value;
-
-	},
-
-	get height() {
-
-		return this.y;
-
-	},
-
-	set height( value ) {
-
-		this.y = value;
-
-	},
-
-	//
-
-	set: function ( x, y ) {
-
-		this.x = x;
-		this.y = y;
-
-		return this;
-
-	},
-
-	setScalar: function ( scalar ) {
-
-		this.x = scalar;
-		this.y = scalar;
-
-		return this;
-
-	},
-
-	setX: function ( x ) {
-
-		this.x = x;
-
-		return this;
-
-	},
-
-	setY: function ( y ) {
-
-		this.y = y;
-
-		return this;
-
-	},
-
-	setComponent: function ( index, value ) {
-
-		switch ( index ) {
-
-			case 0: this.x = value; break;
-			case 1: this.y = value; break;
-			default: throw new Error( 'index is out of range: ' + index );
-
-		}
-
-	},
-
-	getComponent: function ( index ) {
-
-		switch ( index ) {
-
-			case 0: return this.x;
-			case 1: return this.y;
-			default: throw new Error( 'index is out of range: ' + index );
-
-		}
-
-	},
-
-	clone: function () {
-
-		return new this.constructor( this.x, this.y );
-
-	},
-
-	copy: function ( v ) {
-
-		this.x = v.x;
-		this.y = v.y;
-
-		return this;
-
-	},
-
-	add: function ( v, w ) {
-
-		if ( w !== undefined ) {
-
-			console.warn( 'THREE.Vector2: .add() now only accepts one argument. Use .addVectors( a, b ) instead.' );
-			return this.addVectors( v, w );
-
-		}
-
-		this.x += v.x;
-		this.y += v.y;
-
-		return this;
-
-	},
-
-	addScalar: function ( s ) {
-
-		this.x += s;
-		this.y += s;
-
-		return this;
-
-	},
-
-	addVectors: function ( a, b ) {
-
-		this.x = a.x + b.x;
-		this.y = a.y + b.y;
-
-		return this;
-
-	},
-
-	addScaledVector: function ( v, s ) {
-
-		this.x += v.x * s;
-		this.y += v.y * s;
-
-		return this;
-
-	},
-
-	sub: function ( v, w ) {
-
-		if ( w !== undefined ) {
-
-			console.warn( 'THREE.Vector2: .sub() now only accepts one argument. Use .subVectors( a, b ) instead.' );
-			return this.subVectors( v, w );
-
-		}
-
-		this.x -= v.x;
-		this.y -= v.y;
-
-		return this;
-
-	},
-
-	subScalar: function ( s ) {
-
-		this.x -= s;
-		this.y -= s;
-
-		return this;
-
-	},
-
-	subVectors: function ( a, b ) {
-
-		this.x = a.x - b.x;
-		this.y = a.y - b.y;
-
-		return this;
-
-	},
-
-	multiply: function ( v ) {
-
-		this.x *= v.x;
-		this.y *= v.y;
-
-		return this;
-
-	},
-
-	multiplyScalar: function ( scalar ) {
-
-		if ( isFinite( scalar ) ) {
-
-			this.x *= scalar;
-			this.y *= scalar;
-
-		} else {
-
-			this.x = 0;
-			this.y = 0;
-
-		}
-
-		return this;
-
-	},
-
-	divide: function ( v ) {
-
-		this.x /= v.x;
-		this.y /= v.y;
-
-		return this;
-
-	},
-
-	divideScalar: function ( scalar ) {
-
-		return this.multiplyScalar( 1 / scalar );
-
-	},
-
-	min: function ( v ) {
-
-		this.x = Math.min( this.x, v.x );
-		this.y = Math.min( this.y, v.y );
-
-		return this;
-
-	},
-
-	max: function ( v ) {
-
-		this.x = Math.max( this.x, v.x );
-		this.y = Math.max( this.y, v.y );
-
-		return this;
-
-	},
-
-	clamp: function ( min, max ) {
-
-		// This function assumes min < max, if this assumption isn't true it will not operate correctly
-
-		this.x = Math.max( min.x, Math.min( max.x, this.x ) );
-		this.y = Math.max( min.y, Math.min( max.y, this.y ) );
-
-		return this;
-
-	},
-
-	clampScalar: function () {
-
-		var min, max;
-
-		return function clampScalar( minVal, maxVal ) {
-
-			if ( min === undefined ) {
-
-				min = new Vector2();
-				max = new Vector2();
-
-			}
-
-			min.set( minVal, minVal );
-			max.set( maxVal, maxVal );
-
-			return this.clamp( min, max );
-
-		};
-
-	}(),
-
-	clampLength: function ( min, max ) {
-
-		var length = this.length();
-
-		return this.multiplyScalar( Math.max( min, Math.min( max, length ) ) / length );
-
-	},
-
-	floor: function () {
-
-		this.x = Math.floor( this.x );
-		this.y = Math.floor( this.y );
-
-		return this;
-
-	},
-
-	ceil: function () {
-
-		this.x = Math.ceil( this.x );
-		this.y = Math.ceil( this.y );
-
-		return this;
-
-	},
-
-	round: function () {
-
-		this.x = Math.round( this.x );
-		this.y = Math.round( this.y );
-
-		return this;
-
-	},
-
-	roundToZero: function () {
-
-		this.x = ( this.x < 0 ) ? Math.ceil( this.x ) : Math.floor( this.x );
-		this.y = ( this.y < 0 ) ? Math.ceil( this.y ) : Math.floor( this.y );
-
-		return this;
-
-	},
-
-	negate: function () {
-
-		this.x = - this.x;
-		this.y = - this.y;
-
-		return this;
-
-	},
-
-	dot: function ( v ) {
-
-		return this.x * v.x + this.y * v.y;
-
-	},
-
-	lengthSq: function () {
-
-		return this.x * this.x + this.y * this.y;
-
-	},
-
-	length: function () {
-
-		return Math.sqrt( this.x * this.x + this.y * this.y );
-
-	},
-
-	lengthManhattan: function() {
-
-		return Math.abs( this.x ) + Math.abs( this.y );
-
-	},
-
-	normalize: function () {
-
-		return this.divideScalar( this.length() );
-
-	},
-
-	angle: function () {
-
-		// computes the angle in radians with respect to the positive x-axis
-
-		var angle = Math.atan2( this.y, this.x );
-
-		if ( angle < 0 ) angle += 2 * Math.PI;
-
-		return angle;
-
-	},
-
-	distanceTo: function ( v ) {
-
-		return Math.sqrt( this.distanceToSquared( v ) );
-
-	},
-
-	distanceToSquared: function ( v ) {
-
-		var dx = this.x - v.x, dy = this.y - v.y;
-		return dx * dx + dy * dy;
-
-	},
-
-	distanceToManhattan: function ( v ) {
-
-		return Math.abs( this.x - v.x ) + Math.abs( this.y - v.y );
-
-	},
-
-	setLength: function ( length ) {
-
-		return this.multiplyScalar( length / this.length() );
-
-	},
-
-	lerp: function ( v, alpha ) {
-
-		this.x += ( v.x - this.x ) * alpha;
-		this.y += ( v.y - this.y ) * alpha;
-
-		return this;
-
-	},
-
-	lerpVectors: function ( v1, v2, alpha ) {
-
-		return this.subVectors( v2, v1 ).multiplyScalar( alpha ).add( v1 );
-
-	},
-
-	equals: function ( v ) {
-
-		return ( ( v.x === this.x ) && ( v.y === this.y ) );
-
-	},
-
-	fromArray: function ( array, offset ) {
-
-		if ( offset === undefined ) offset = 0;
-
-		this.x = array[ offset ];
-		this.y = array[ offset + 1 ];
-
-		return this;
-
-	},
-
-	toArray: function ( array, offset ) {
-
-		if ( array === undefined ) array = [];
-		if ( offset === undefined ) offset = 0;
-
-		array[ offset ] = this.x;
-		array[ offset + 1 ] = this.y;
-
-		return array;
-
-	},
-
-	fromAttribute: function ( attribute, index, offset ) {
-
-		if ( offset === undefined ) offset = 0;
-
-		index = index * attribute.itemSize + offset;
-
-		this.x = attribute.array[ index ];
-		this.y = attribute.array[ index + 1 ];
-
-		return this;
-
-	},
-
-	rotateAround: function ( center, angle ) {
-
-		var c = Math.cos( angle ), s = Math.sin( angle );
-
-		var x = this.x - center.x;
-		var y = this.y - center.y;
-
-		this.x = x * c - y * s + center.x;
-		this.y = x * s + y * c + center.y;
-
-		return this;
-
-	}
-
-};
-
-/**
- * @author mrdoob / http://mrdoob.com/
- * @author alteredq / http://alteredqualia.com/
- * @author szimek / https://github.com/szimek/
- */
-
-function Texture( image, mapping, wrapS, wrapT, magFilter, minFilter, format, type, anisotropy, encoding ) {
-
-	Object.defineProperty( this, 'id', { value: TextureIdCount() } );
-
-	this.uuid = exports.Math.generateUUID();
-
-	this.name = '';
-	this.sourceFile = '';
-
-	this.image = image !== undefined ? image : Texture.DEFAULT_IMAGE;
-	this.mipmaps = [];
-
-	this.mapping = mapping !== undefined ? mapping : Texture.DEFAULT_MAPPING;
-
-	this.wrapS = wrapS !== undefined ? wrapS : ClampToEdgeWrapping;
-	this.wrapT = wrapT !== undefined ? wrapT : ClampToEdgeWrapping;
-
-	this.magFilter = magFilter !== undefined ? magFilter : LinearFilter;
-	this.minFilter = minFilter !== undefined ? minFilter : LinearMipMapLinearFilter;
-
-	this.anisotropy = anisotropy !== undefined ? anisotropy : 1;
-
-	this.format = format !== undefined ? format : RGBAFormat;
-	this.type = type !== undefined ? type : UnsignedByteType;
-
-	this.offset = new Vector2( 0, 0 );
-	this.repeat = new Vector2( 1, 1 );
-
-	this.generateMipmaps = true;
-	this.premultiplyAlpha = false;
-	this.flipY = true;
-	this.unpackAlignment = 4;	// valid values: 1, 2, 4, 8 (see http://www.khronos.org/opengles/sdk/docs/man/xhtml/glPixelStorei.xml)
-
-
-	// Values of encoding !== THREE.LinearEncoding only supported on map, envMap and emissiveMap.
-	//
-	// Also changing the encoding after already used by a Material will not automatically make the Material
-	// update.  You need to explicitly call Material.needsUpdate to trigger it to recompile.
-	this.encoding = encoding !== undefined ? encoding :  LinearEncoding;
-
-	this.version = 0;
-	this.onUpdate = null;
-
-}
-
-Texture.DEFAULT_IMAGE = undefined;
-Texture.DEFAULT_MAPPING = UVMapping;
-
-Texture.prototype = {
-
-	constructor: Texture,
-
-	isTexture: true,
-
-	set needsUpdate( value ) {
-
-		if ( value === true ) this.version ++;
-
-	},
-
-	clone: function () {
-
-		return new this.constructor().copy( this );
-
-	},
-
-	copy: function ( source ) {
-
-		this.image = source.image;
-		this.mipmaps = source.mipmaps.slice( 0 );
-
-		this.mapping = source.mapping;
-
-		this.wrapS = source.wrapS;
-		this.wrapT = source.wrapT;
-
-		this.magFilter = source.magFilter;
-		this.minFilter = source.minFilter;
-
-		this.anisotropy = source.anisotropy;
-
-		this.format = source.format;
-		this.type = source.type;
-
-		this.offset.copy( source.offset );
-		this.repeat.copy( source.repeat );
-
-		this.generateMipmaps = source.generateMipmaps;
-		this.premultiplyAlpha = source.premultiplyAlpha;
-		this.flipY = source.flipY;
-		this.unpackAlignment = source.unpackAlignment;
-		this.encoding = source.encoding;
-
-		return this;
-
-	},
-
-	toJSON: function ( meta ) {
-
-		if ( meta.textures[ this.uuid ] !== undefined ) {
-
-			return meta.textures[ this.uuid ];
-
-		}
-
-		function getDataURL( image ) {
-
-			var canvas;
-
-			if ( image.toDataURL !== undefined ) {
-
-				canvas = image;
-
-			} else {
-
-				canvas = document.createElementNS( 'http://www.w3.org/1999/xhtml', 'canvas' );
-				canvas.width = image.width;
-				canvas.height = image.height;
-
-				canvas.getContext( '2d' ).drawImage( image, 0, 0, image.width, image.height );
-
-			}
-
-			if ( canvas.width > 2048 || canvas.height > 2048 ) {
-
-				return canvas.toDataURL( 'image/jpeg', 0.6 );
-
-			} else {
-
-				return canvas.toDataURL( 'image/png' );
-
-			}
-
-		}
-
-		var output = {
-			metadata: {
-				version: 4.4,
-				type: 'Texture',
-				generator: 'Texture.toJSON'
-			},
-
-			uuid: this.uuid,
-			name: this.name,
-
-			mapping: this.mapping,
-
-			repeat: [ this.repeat.x, this.repeat.y ],
-			offset: [ this.offset.x, this.offset.y ],
-			wrap: [ this.wrapS, this.wrapT ],
-
-			minFilter: this.minFilter,
-			magFilter: this.magFilter,
-			anisotropy: this.anisotropy,
-
-			flipY: this.flipY
-		};
-
-		if ( this.image !== undefined ) {
-
-			// TODO: Move to THREE.Image
-
-			var image = this.image;
-
-			if ( image.uuid === undefined ) {
-
-				image.uuid = exports.Math.generateUUID(); // UGH
-
-			}
-
-			if ( meta.images[ image.uuid ] === undefined ) {
-
-				meta.images[ image.uuid ] = {
-					uuid: image.uuid,
-					url: getDataURL( image )
-				};
-
-			}
-
-			output.image = image.uuid;
-
-		}
-
-		meta.textures[ this.uuid ] = output;
-
-		return output;
-
-	},
-
-	dispose: function () {
-
-		this.dispatchEvent( { type: 'dispose' } );
-
-	},
-
-	transformUv: function ( uv ) {
-
-		if ( this.mapping !== UVMapping )  return;
-
-		uv.multiply( this.repeat );
-		uv.add( this.offset );
-
-		if ( uv.x < 0 || uv.x > 1 ) {
-
-			switch ( this.wrapS ) {
-
-				case RepeatWrapping:
-
-					uv.x = uv.x - Math.floor( uv.x );
-					break;
-
-				case ClampToEdgeWrapping:
-
-					uv.x = uv.x < 0 ? 0 : 1;
-					break;
-
-				case MirroredRepeatWrapping:
-
-					if ( Math.abs( Math.floor( uv.x ) % 2 ) === 1 ) {
-
-						uv.x = Math.ceil( uv.x ) - uv.x;
-
-					} else {
-
-						uv.x = uv.x - Math.floor( uv.x );
-
-					}
-					break;
-
-			}
-
-		}
-
-		if ( uv.y < 0 || uv.y > 1 ) {
-
-			switch ( this.wrapT ) {
-
-				case RepeatWrapping:
-
-					uv.y = uv.y - Math.floor( uv.y );
-					break;
-
-				case ClampToEdgeWrapping:
-
-					uv.y = uv.y < 0 ? 0 : 1;
-					break;
-
-				case MirroredRepeatWrapping:
-
-					if ( Math.abs( Math.floor( uv.y ) % 2 ) === 1 ) {
-
-						uv.y = Math.ceil( uv.y ) - uv.y;
-
-					} else {
-
-						uv.y = uv.y - Math.floor( uv.y );
-
-					}
-					break;
-
-			}
-
-		}
-
-		if ( this.flipY ) {
-
-			uv.y = 1 - uv.y;
-
-		}
-
-	}
-
-};
-
-Object.assign( Texture.prototype, EventDispatcher.prototype );
-
-var count = 0;
-function TextureIdCount() { return count++; };
-
-/**
- * @author mrdoob / http://mrdoob.com/
  * @author supereggbert / http://www.paulbrunt.co.uk/
  * @author philogb / http://blog.thejit.org/
  * @author jordi_ros / http://plattsoft.com
@@ -1272,6 +379,98 @@ function Matrix4() {
 
 	this.origin = new Vector3();
 	Object.defineProperty(this, "origin", { writable:false } );
+
+	this.motion = null;
+        this.motion = {
+        	tick : 0,
+        	speed : new Vector3(),
+                acceleration : new Vector3(),
+                rotation : new Vector3(),
+                torque : new Vector3(),
+                mass : 1.0,
+                move : function( m, delta ) {
+					this.speed.addScaledVector( this.acceleration, delta );
+					var del = this.speed.clone().multiplyScalar( delta );
+
+					m.origin.addScaledVector( m.backward, -del.z );
+					m.origin.addScaledVector( m.up, del.y );
+					m.origin.addScaledVector( m.left, del.x );
+
+					this.rotation.addScaledVector( this.torque, delta );
+					var this_move = this.rotation.clone().multiplyScalar( delta )
+					m.rotateRelative( this_move.x, this_move.y, this_move.z );
+				},
+				rotate : function( m, delta ) {
+					var iterations = 1;
+
+					var max = Math.abs( this.rotation.x );
+					var tmp = Math.abs( this.rotation.y );
+					if( tmp > max ) {
+						max = tmp;
+						tmp = Math.abs( this.rotation.z );
+						if( tmp > max ) {
+							max = tmp;
+							while( ( ( max * delta ) / iterations ) > 0.1 )
+								iterations++;
+						} else {
+							while( ( ( max * delta ) / iterations ) > 0.1 )
+								iterations++;
+						}
+					} else {
+						tmp = Math.abs( this.rotation.z );
+						if( tmp > max ) {
+							max = tmp;
+							while( ( ( max * delta ) / iterations ) > 0.1 )
+								iterations++;
+						} else {
+							while( ( ( max * delta ) / iterations ) > 0.1 )
+								iterations++;
+						}
+					}
+					var delx = ( this.rotation.x * delta ) / iterations;
+					var dely = ( this.rotation.y * delta ) / iterations;
+					var delz = ( this.rotation.z * delta ) / iterations;
+					for( var n = 0; n < iterations; n++ ) {
+						m.rotateRelative( delx, dely, delz );
+					}
+					// delta = delta / 1000;
+					/*
+					   ** this is becoming a physics engine frame...
+					   ** might as well just add that.
+                	var delta_accel = this.acceleration.clone().multiplyScalar(delta);
+					if( ( this.rotation.x > ( Math.PI / 4 ) )
+					   ||( this.rotation.x < -( Math.PI / 4 ) )
+					   ||( this.rotation.y > ( Math.PI / 4 ) )
+					   ||( this.rotation.y < -( Math.PI / 4 ) )
+					   ||( this.rotation.z > ( Math.PI / 4 ) )
+					   ||( this.rotation.z < -( Math.PI / 4 ) )
+					   ){
+						   var max = this.rotation.x;
+						   if( max < this.rotation.y )
+						   	 max = this.rotation.y;
+						   if( max < this.rotation.z )
+						     max = this.rotation.z;
+						 var min = this.rotation.x;
+  						   if( min > this.rotation.y )
+  						   	 max = this.rotation.y;
+  						   if( min > this.rotation.z )
+  						     max = this.rotation.z;
+							if( min < 0 )
+								if( max < -min )
+									max = -min;
+							var t;
+							for( t = 1; t < 100; t++ )
+								if( ( max / t ) < ( Math.PI / 4 ))
+									break;
+
+							delta_accel.scale( 1 / t );
+					   }
+					  */
+				  }
+
+        };
+
+
 
 	this.tick = 0;
 
@@ -2378,6 +1577,18 @@ Matrix4.prototype = {
 	get backward() {
 			return new THREE.Vector3( -this.elements[8], -this.elements[9], -this.elements[10] );
         },
+	move : function (tick) {
+        	if( this.motion )
+				this.motion.move( this, tick );
+        	//this.origin.addScaledVector( this.forward, z ).addScaledVector( this.up, y ).addScaledVector( this.left, x )
+		},
+	moveNow : function ( x,y,z ) { this.origin.addScaledVector( this.forward, z ).addScaledVector( this.up, y ).addScaledVector( this.left, x ) },
+	moveForward : function ( n ) { this.origin.addScaledVector( this.forward, n ); },
+	moveUp : function ( n ) { this.origin.addScaledVector( this.up, n ); },
+	moveLeft : function ( n ) { this.origin.addScaledVector( this.left, n ); },
+	moveBackward : function ( n ) { this.origin.addScaledVector( this.backward, n ); },
+	moveDown : function ( n ) { this.origin.addScaledVector( this.down, n ); },
+	moveRight : function ( n ) { this.origin.addScaledVector( this.right, n ); },
 
 	get inv_left() {
         	return new THREE.Vector3( this.elements[0], this.elements[4], this.elements[8] );
@@ -2402,13 +1613,13 @@ Matrix4.prototype = {
 		return Math.asin( this.forward.dot( relativeRight ) );
 	},
 	get roll( ) {
-		return this.getRoll( THREE.Vector3Up );
+		return this.getRoll( Vector3Up );
 	},
 	get pitch( ) {
-		return this.getPitch( THREE.Vector3Forward );
+		return this.getPitch( Vector3Forward );
 	},
 	get yaw() {
-		return this.getYaw( THREE.Vector3Right );
+		return this.getYaw( Vector3Right );
 	},
 
 };
@@ -3016,11 +2227,34 @@ function Vector3( x, y, z ) {
 
 }
 
+var Vector3Pool = {
+	new : function(x,y,z) {
+		var r = vectorPool.pop();
+		if( r ) {
+			r.x = x;
+			r.y = y;
+			r.z = z;
+		}
+		else{
+			r = new Vector3(x,y,z);
+		}
+		return r;
+	}
+}
+
+var vectorPool = [];
+
+
 Vector3.prototype = {
 
 	constructor: Vector3,
 
 	isVector3: true,
+
+	delete : function() {
+		vectorPool.push( this );
+		return this;
+	},
 
 	set: function ( x, y, z ) {
 
@@ -3094,7 +2328,7 @@ Vector3.prototype = {
 
 	clone: function () {
 
-		return new this.constructor( this.x, this.y, this.z );
+		return Vector3Pool.new( this.x, this.y, this.z );
 
 	},
 
@@ -3779,14 +3013,141 @@ Vector3.prototype = {
 
 };
 
-const Vector3Unit = new Vector3( 1, 1, 1 );
-const Vector3Zero = new Vector3( 0, 0, 0 );
-const Vector3Right = new Vector3( -1, 0, 0 );
-const Vector3Backward = new Vector3( 0, 0, 1 );
+var REVISION = '80';
+var MOUSE = { LEFT: 0, MIDDLE: 1, RIGHT: 2 };
+var CullFaceNone = 0;
+var CullFaceBack = 1;
+var CullFaceFront = 2;
+var CullFaceFrontBack = 3;
+var FrontFaceDirectionCW = 0;
+var FrontFaceDirectionCCW = 1;
+var BasicShadowMap = 0;
+var PCFShadowMap = 1;
+var PCFSoftShadowMap = 2;
+var FrontSide = 0;
+var BackSide = 1;
+var DoubleSide = 2;
+var FlatShading = 1;
+var SmoothShading = 2;
+var NoColors = 0;
+var FaceColors = 1;
+var VertexColors = 2;
+var NoBlending = 0;
+var NormalBlending = 1;
+var AdditiveBlending = 2;
+var SubtractiveBlending = 3;
+var MultiplyBlending = 4;
+var CustomBlending = 5;
+var AddEquation = 100;
+var SubtractEquation = 101;
+var ReverseSubtractEquation = 102;
+var MinEquation = 103;
+var MaxEquation = 104;
+var ZeroFactor = 200;
+var OneFactor = 201;
+var SrcColorFactor = 202;
+var OneMinusSrcColorFactor = 203;
+var SrcAlphaFactor = 204;
+var OneMinusSrcAlphaFactor = 205;
+var DstAlphaFactor = 206;
+var OneMinusDstAlphaFactor = 207;
+var DstColorFactor = 208;
+var OneMinusDstColorFactor = 209;
+var SrcAlphaSaturateFactor = 210;
+var NeverDepth = 0;
+var AlwaysDepth = 1;
+var LessDepth = 2;
+var LessEqualDepth = 3;
+var EqualDepth = 4;
+var GreaterEqualDepth = 5;
+var GreaterDepth = 6;
+var NotEqualDepth = 7;
+var MultiplyOperation = 0;
+var MixOperation = 1;
+var AddOperation = 2;
+var NoToneMapping = 0;
+var LinearToneMapping = 1;
+var ReinhardToneMapping = 2;
+var Uncharted2ToneMapping = 3;
+var CineonToneMapping = 4;
+var UVMapping = 300;
+var CubeReflectionMapping = 301;
+var CubeRefractionMapping = 302;
+var EquirectangularReflectionMapping = 303;
+var EquirectangularRefractionMapping = 304;
+var SphericalReflectionMapping = 305;
+var CubeUVReflectionMapping = 306;
+var CubeUVRefractionMapping = 307;
+var RepeatWrapping = 1000;
+var ClampToEdgeWrapping = 1001;
+var MirroredRepeatWrapping = 1002;
+var NearestFilter = 1003;
+var NearestMipMapNearestFilter = 1004;
+var NearestMipMapLinearFilter = 1005;
+var LinearFilter = 1006;
+var LinearMipMapNearestFilter = 1007;
+var LinearMipMapLinearFilter = 1008;
+var UnsignedByteType = 1009;
+var ByteType = 1010;
+var ShortType = 1011;
+var UnsignedShortType = 1012;
+var IntType = 1013;
+var UnsignedIntType = 1014;
+var FloatType = 1015;
+var HalfFloatType = 1016;
+var UnsignedShort4444Type = 1017;
+var UnsignedShort5551Type = 1018;
+var UnsignedShort565Type = 1019;
+var UnsignedInt248Type = 1020;
+var AlphaFormat = 1021;
+var RGBFormat = 1022;
+var RGBAFormat = 1023;
+var LuminanceFormat = 1024;
+var LuminanceAlphaFormat = 1025;
+var RGBEFormat = RGBAFormat;
+var DepthFormat = 1026;
+var DepthStencilFormat = 1027;
+var RGB_S3TC_DXT1_Format = 2001;
+var RGBA_S3TC_DXT1_Format = 2002;
+var RGBA_S3TC_DXT3_Format = 2003;
+var RGBA_S3TC_DXT5_Format = 2004;
+var RGB_PVRTC_4BPPV1_Format = 2100;
+var RGB_PVRTC_2BPPV1_Format = 2101;
+var RGBA_PVRTC_4BPPV1_Format = 2102;
+var RGBA_PVRTC_2BPPV1_Format = 2103;
+var RGB_ETC1_Format = 2151;
+var LoopOnce = 2200;
+var LoopRepeat = 2201;
+var LoopPingPong = 2202;
+var InterpolateDiscrete = 2300;
+var InterpolateLinear = 2301;
+var InterpolateSmooth = 2302;
+var ZeroCurvatureEnding = 2400;
+var ZeroSlopeEnding = 2401;
+var WrapAroundEnding = 2402;
+var TrianglesDrawMode = 0;
+var TriangleStripDrawMode = 1;
+var TriangleFanDrawMode = 2;
+var LinearEncoding = 3000;
+var sRGBEncoding = 3001;
+var GammaEncoding = 3007;
+var RGBEEncoding = 3002;
+var LogLuvEncoding = 3003;
+var RGBM7Encoding = 3004;
+var RGBM16Encoding = 3005;
+var RGBDEncoding = 3006;
+var BasicDepthPacking = 3200;
+var RGBADepthPacking = 3201;
+
+const Vector3Unit = new        Vector3( 1, 1, 1 );
+const Vector3Zero = new        Vector3( 0, 0, 0 );
+const Vector3Right = new        Vector3( -1, 0, 0 );
+const Vector3Backward = new Vector3       ( 0, 0, 1 );
 const Vector3Up = new Vector3( 0, 1, 0 );
 const Vector3Left = new Vector3( 1, 0, 0 );
 const Vector3Forward = new Vector3( 0, 0, -1 );
 const Vector3Down = new Vector3( 0, -1, 0 );
+
 
 [Vector3Unit
 ,Vector3Zero
@@ -3796,11 +3157,778 @@ const Vector3Down = new Vector3( 0, -1, 0 );
 ,Vector3Left
 ,Vector3Forward
 ,Vector3Down].forEach( function(key){
-	//Object.defineProperty(THREE, key, { writable: false })
+	//Object.defineProperty(Vector3, key, { writable: false })
 	Object.defineProperty(key, "x", { writable: false })
 	Object.defineProperty(key, "y", { writable: false })
 	Object.defineProperty(key, "z", { writable: false })
 })
+
+/**
+ * @author mrdoob / http://mrdoob.com/
+ * @author philogb / http://blog.thejit.org/
+ * @author egraether / http://egraether.com/
+ * @author zz85 / http://www.lab4games.net/zz85/blog
+ */
+
+function Vector2( x, y ) {
+
+	this.x = x || 0;
+	this.y = y || 0;
+
+}
+
+Vector2.prototype = {
+
+	constructor: Vector2,
+
+	isVector2: true,
+
+	get width() {
+
+		return this.x;
+
+	},
+
+	set width( value ) {
+
+		this.x = value;
+
+	},
+
+	get height() {
+
+		return this.y;
+
+	},
+
+	set height( value ) {
+
+		this.y = value;
+
+	},
+
+	//
+
+	set: function ( x, y ) {
+
+		this.x = x;
+		this.y = y;
+
+		return this;
+
+	},
+
+	setScalar: function ( scalar ) {
+
+		this.x = scalar;
+		this.y = scalar;
+
+		return this;
+
+	},
+
+	setX: function ( x ) {
+
+		this.x = x;
+
+		return this;
+
+	},
+
+	setY: function ( y ) {
+
+		this.y = y;
+
+		return this;
+
+	},
+
+	setComponent: function ( index, value ) {
+
+		switch ( index ) {
+
+			case 0: this.x = value; break;
+			case 1: this.y = value; break;
+			default: throw new Error( 'index is out of range: ' + index );
+
+		}
+
+	},
+
+	getComponent: function ( index ) {
+
+		switch ( index ) {
+
+			case 0: return this.x;
+			case 1: return this.y;
+			default: throw new Error( 'index is out of range: ' + index );
+
+		}
+
+	},
+
+	clone: function () {
+
+		return new this.constructor( this.x, this.y );
+
+	},
+
+	copy: function ( v ) {
+
+		this.x = v.x;
+		this.y = v.y;
+
+		return this;
+
+	},
+
+	add: function ( v, w ) {
+
+		if ( w !== undefined ) {
+
+			console.warn( 'THREE.Vector2: .add() now only accepts one argument. Use .addVectors( a, b ) instead.' );
+			return this.addVectors( v, w );
+
+		}
+
+		this.x += v.x;
+		this.y += v.y;
+
+		return this;
+
+	},
+
+	addScalar: function ( s ) {
+
+		this.x += s;
+		this.y += s;
+
+		return this;
+
+	},
+
+	addVectors: function ( a, b ) {
+
+		this.x = a.x + b.x;
+		this.y = a.y + b.y;
+
+		return this;
+
+	},
+
+	addScaledVector: function ( v, s ) {
+
+		this.x += v.x * s;
+		this.y += v.y * s;
+
+		return this;
+
+	},
+
+	sub: function ( v, w ) {
+
+		if ( w !== undefined ) {
+
+			console.warn( 'THREE.Vector2: .sub() now only accepts one argument. Use .subVectors( a, b ) instead.' );
+			return this.subVectors( v, w );
+
+		}
+
+		this.x -= v.x;
+		this.y -= v.y;
+
+		return this;
+
+	},
+
+	subScalar: function ( s ) {
+
+		this.x -= s;
+		this.y -= s;
+
+		return this;
+
+	},
+
+	subVectors: function ( a, b ) {
+
+		this.x = a.x - b.x;
+		this.y = a.y - b.y;
+
+		return this;
+
+	},
+
+	multiply: function ( v ) {
+
+		this.x *= v.x;
+		this.y *= v.y;
+
+		return this;
+
+	},
+
+	multiplyScalar: function ( scalar ) {
+
+		if ( isFinite( scalar ) ) {
+
+			this.x *= scalar;
+			this.y *= scalar;
+
+		} else {
+
+			this.x = 0;
+			this.y = 0;
+
+		}
+
+		return this;
+
+	},
+
+	divide: function ( v ) {
+
+		this.x /= v.x;
+		this.y /= v.y;
+
+		return this;
+
+	},
+
+	divideScalar: function ( scalar ) {
+
+		return this.multiplyScalar( 1 / scalar );
+
+	},
+
+	min: function ( v ) {
+
+		this.x = Math.min( this.x, v.x );
+		this.y = Math.min( this.y, v.y );
+
+		return this;
+
+	},
+
+	max: function ( v ) {
+
+		this.x = Math.max( this.x, v.x );
+		this.y = Math.max( this.y, v.y );
+
+		return this;
+
+	},
+
+	clamp: function ( min, max ) {
+
+		// This function assumes min < max, if this assumption isn't true it will not operate correctly
+
+		this.x = Math.max( min.x, Math.min( max.x, this.x ) );
+		this.y = Math.max( min.y, Math.min( max.y, this.y ) );
+
+		return this;
+
+	},
+
+	clampScalar: function () {
+
+		var min, max;
+
+		return function clampScalar( minVal, maxVal ) {
+
+			if ( min === undefined ) {
+
+				min = new Vector2();
+				max = new Vector2();
+
+			}
+
+			min.set( minVal, minVal );
+			max.set( maxVal, maxVal );
+
+			return this.clamp( min, max );
+
+		};
+
+	}(),
+
+	clampLength: function ( min, max ) {
+
+		var length = this.length();
+
+		return this.multiplyScalar( Math.max( min, Math.min( max, length ) ) / length );
+
+	},
+
+	floor: function () {
+
+		this.x = Math.floor( this.x );
+		this.y = Math.floor( this.y );
+
+		return this;
+
+	},
+
+	ceil: function () {
+
+		this.x = Math.ceil( this.x );
+		this.y = Math.ceil( this.y );
+
+		return this;
+
+	},
+
+	round: function () {
+
+		this.x = Math.round( this.x );
+		this.y = Math.round( this.y );
+
+		return this;
+
+	},
+
+	roundToZero: function () {
+
+		this.x = ( this.x < 0 ) ? Math.ceil( this.x ) : Math.floor( this.x );
+		this.y = ( this.y < 0 ) ? Math.ceil( this.y ) : Math.floor( this.y );
+
+		return this;
+
+	},
+
+	negate: function () {
+
+		this.x = - this.x;
+		this.y = - this.y;
+
+		return this;
+
+	},
+
+	dot: function ( v ) {
+
+		return this.x * v.x + this.y * v.y;
+
+	},
+
+	lengthSq: function () {
+
+		return this.x * this.x + this.y * this.y;
+
+	},
+
+	length: function () {
+
+		return Math.sqrt( this.x * this.x + this.y * this.y );
+
+	},
+
+	lengthManhattan: function() {
+
+		return Math.abs( this.x ) + Math.abs( this.y );
+
+	},
+
+	normalize: function () {
+
+		return this.divideScalar( this.length() );
+
+	},
+
+	angle: function () {
+
+		// computes the angle in radians with respect to the positive x-axis
+
+		var angle = Math.atan2( this.y, this.x );
+
+		if ( angle < 0 ) angle += 2 * Math.PI;
+
+		return angle;
+
+	},
+
+	distanceTo: function ( v ) {
+
+		return Math.sqrt( this.distanceToSquared( v ) );
+
+	},
+
+	distanceToSquared: function ( v ) {
+
+		var dx = this.x - v.x, dy = this.y - v.y;
+		return dx * dx + dy * dy;
+
+	},
+
+	distanceToManhattan: function ( v ) {
+
+		return Math.abs( this.x - v.x ) + Math.abs( this.y - v.y );
+
+	},
+
+	setLength: function ( length ) {
+
+		return this.multiplyScalar( length / this.length() );
+
+	},
+
+	lerp: function ( v, alpha ) {
+
+		this.x += ( v.x - this.x ) * alpha;
+		this.y += ( v.y - this.y ) * alpha;
+
+		return this;
+
+	},
+
+	lerpVectors: function ( v1, v2, alpha ) {
+
+		return this.subVectors( v2, v1 ).multiplyScalar( alpha ).add( v1 );
+
+	},
+
+	equals: function ( v ) {
+
+		return ( ( v.x === this.x ) && ( v.y === this.y ) );
+
+	},
+
+	fromArray: function ( array, offset ) {
+
+		if ( offset === undefined ) offset = 0;
+
+		this.x = array[ offset ];
+		this.y = array[ offset + 1 ];
+
+		return this;
+
+	},
+
+	toArray: function ( array, offset ) {
+
+		if ( array === undefined ) array = [];
+		if ( offset === undefined ) offset = 0;
+
+		array[ offset ] = this.x;
+		array[ offset + 1 ] = this.y;
+
+		return array;
+
+	},
+
+	fromAttribute: function ( attribute, index, offset ) {
+
+		if ( offset === undefined ) offset = 0;
+
+		index = index * attribute.itemSize + offset;
+
+		this.x = attribute.array[ index ];
+		this.y = attribute.array[ index + 1 ];
+
+		return this;
+
+	},
+
+	rotateAround: function ( center, angle ) {
+
+		var c = Math.cos( angle ), s = Math.sin( angle );
+
+		var x = this.x - center.x;
+		var y = this.y - center.y;
+
+		this.x = x * c - y * s + center.x;
+		this.y = x * s + y * c + center.y;
+
+		return this;
+
+	}
+
+};
+
+/**
+ * @author mrdoob / http://mrdoob.com/
+ * @author alteredq / http://alteredqualia.com/
+ * @author szimek / https://github.com/szimek/
+ */
+
+function Texture( image, mapping, wrapS, wrapT, magFilter, minFilter, format, type, anisotropy, encoding ) {
+
+	Object.defineProperty( this, 'id', { value: TextureIdCount() } );
+
+	this.uuid = exports.Math.generateUUID();
+
+	this.name = '';
+	this.sourceFile = '';
+
+	this.image = image !== undefined ? image : Texture.DEFAULT_IMAGE;
+	this.mipmaps = [];
+
+	this.mapping = mapping !== undefined ? mapping : Texture.DEFAULT_MAPPING;
+
+	this.wrapS = wrapS !== undefined ? wrapS : ClampToEdgeWrapping;
+	this.wrapT = wrapT !== undefined ? wrapT : ClampToEdgeWrapping;
+
+	this.magFilter = magFilter !== undefined ? magFilter : LinearFilter;
+	this.minFilter = minFilter !== undefined ? minFilter : LinearMipMapLinearFilter;
+
+	this.anisotropy = anisotropy !== undefined ? anisotropy : 1;
+
+	this.format = format !== undefined ? format : RGBAFormat;
+	this.type = type !== undefined ? type : UnsignedByteType;
+
+	this.offset = new Vector2( 0, 0 );
+	this.repeat = new Vector2( 1, 1 );
+
+	this.generateMipmaps = true;
+	this.premultiplyAlpha = false;
+	this.flipY = true;
+	this.unpackAlignment = 4;	// valid values: 1, 2, 4, 8 (see http://www.khronos.org/opengles/sdk/docs/man/xhtml/glPixelStorei.xml)
+
+
+	// Values of encoding !== THREE.LinearEncoding only supported on map, envMap and emissiveMap.
+	//
+	// Also changing the encoding after already used by a Material will not automatically make the Material
+	// update.  You need to explicitly call Material.needsUpdate to trigger it to recompile.
+	this.encoding = encoding !== undefined ? encoding :  LinearEncoding;
+
+	this.version = 0;
+	this.onUpdate = null;
+
+}
+
+Texture.DEFAULT_IMAGE = undefined;
+Texture.DEFAULT_MAPPING = UVMapping;
+
+Texture.prototype = {
+
+	constructor: Texture,
+
+	isTexture: true,
+
+	set needsUpdate( value ) {
+
+		if ( value === true ) this.version ++;
+
+	},
+
+	clone: function () {
+
+		return new this.constructor().copy( this );
+
+	},
+
+	copy: function ( source ) {
+
+		this.image = source.image;
+		this.mipmaps = source.mipmaps.slice( 0 );
+
+		this.mapping = source.mapping;
+
+		this.wrapS = source.wrapS;
+		this.wrapT = source.wrapT;
+
+		this.magFilter = source.magFilter;
+		this.minFilter = source.minFilter;
+
+		this.anisotropy = source.anisotropy;
+
+		this.format = source.format;
+		this.type = source.type;
+
+		this.offset.copy( source.offset );
+		this.repeat.copy( source.repeat );
+
+		this.generateMipmaps = source.generateMipmaps;
+		this.premultiplyAlpha = source.premultiplyAlpha;
+		this.flipY = source.flipY;
+		this.unpackAlignment = source.unpackAlignment;
+		this.encoding = source.encoding;
+
+		return this;
+
+	},
+
+	toJSON: function ( meta ) {
+
+		if ( meta.textures[ this.uuid ] !== undefined ) {
+
+			return meta.textures[ this.uuid ];
+
+		}
+
+		function getDataURL( image ) {
+
+			var canvas;
+
+			if ( image.toDataURL !== undefined ) {
+
+				canvas = image;
+
+			} else {
+
+				canvas = document.createElementNS( 'http://www.w3.org/1999/xhtml', 'canvas' );
+				canvas.width = image.width;
+				canvas.height = image.height;
+
+				canvas.getContext( '2d' ).drawImage( image, 0, 0, image.width, image.height );
+
+			}
+
+			if ( canvas.width > 2048 || canvas.height > 2048 ) {
+
+				return canvas.toDataURL( 'image/jpeg', 0.6 );
+
+			} else {
+
+				return canvas.toDataURL( 'image/png' );
+
+			}
+
+		}
+
+		var output = {
+			metadata: {
+				version: 4.4,
+				type: 'Texture',
+				generator: 'Texture.toJSON'
+			},
+
+			uuid: this.uuid,
+			name: this.name,
+
+			mapping: this.mapping,
+
+			repeat: [ this.repeat.x, this.repeat.y ],
+			offset: [ this.offset.x, this.offset.y ],
+			wrap: [ this.wrapS, this.wrapT ],
+
+			minFilter: this.minFilter,
+			magFilter: this.magFilter,
+			anisotropy: this.anisotropy,
+
+			flipY: this.flipY
+		};
+
+		if ( this.image !== undefined ) {
+
+			// TODO: Move to THREE.Image
+
+			var image = this.image;
+
+			if ( image.uuid === undefined ) {
+
+				image.uuid = exports.Math.generateUUID(); // UGH
+
+			}
+
+			if ( meta.images[ image.uuid ] === undefined ) {
+
+				meta.images[ image.uuid ] = {
+					uuid: image.uuid,
+					url: getDataURL( image )
+				};
+
+			}
+
+			output.image = image.uuid;
+
+		}
+
+		meta.textures[ this.uuid ] = output;
+
+		return output;
+
+	},
+
+	dispose: function () {
+
+		this.dispatchEvent( { type: 'dispose' } );
+
+	},
+
+	transformUv: function ( uv ) {
+
+		if ( this.mapping !== UVMapping )  return;
+
+		uv.multiply( this.repeat );
+		uv.add( this.offset );
+
+		if ( uv.x < 0 || uv.x > 1 ) {
+
+			switch ( this.wrapS ) {
+
+				case RepeatWrapping:
+
+					uv.x = uv.x - Math.floor( uv.x );
+					break;
+
+				case ClampToEdgeWrapping:
+
+					uv.x = uv.x < 0 ? 0 : 1;
+					break;
+
+				case MirroredRepeatWrapping:
+
+					if ( Math.abs( Math.floor( uv.x ) % 2 ) === 1 ) {
+
+						uv.x = Math.ceil( uv.x ) - uv.x;
+
+					} else {
+
+						uv.x = uv.x - Math.floor( uv.x );
+
+					}
+					break;
+
+			}
+
+		}
+
+		if ( uv.y < 0 || uv.y > 1 ) {
+
+			switch ( this.wrapT ) {
+
+				case RepeatWrapping:
+
+					uv.y = uv.y - Math.floor( uv.y );
+					break;
+
+				case ClampToEdgeWrapping:
+
+					uv.y = uv.y < 0 ? 0 : 1;
+					break;
+
+				case MirroredRepeatWrapping:
+
+					if ( Math.abs( Math.floor( uv.y ) % 2 ) === 1 ) {
+
+						uv.y = Math.ceil( uv.y ) - uv.y;
+
+					} else {
+
+						uv.y = uv.y - Math.floor( uv.y );
+
+					}
+					break;
+
+			}
+
+		}
+
+		if ( this.flipY ) {
+
+			uv.y = 1 - uv.y;
+
+		}
+
+	}
+
+};
+
+Object.assign( Texture.prototype, EventDispatcher.prototype );
+
+var count = 0;
+function TextureIdCount() { return count++; };
 
 /**
  * @author mikael emtinger / http://gomo.se/
@@ -42083,6 +42211,14 @@ exports.RGBM16Encoding = RGBM16Encoding;
 exports.RGBDEncoding = RGBDEncoding;
 exports.BasicDepthPacking = BasicDepthPacking;
 exports.RGBADepthPacking = RGBADepthPacking;
+exports.Vector3Unit = Vector3Unit;
+exports.Vector3Zero = Vector3Zero;
+exports.Vector3Right = Vector3Right;
+exports.Vector3Backward = Vector3Backward;
+exports.Vector3Up = Vector3Up;
+exports.Vector3Left = Vector3Left;
+exports.Vector3Forward = Vector3Forward;
+exports.Vector3Down = Vector3Down;
 exports.CubeGeometry = BoxGeometry;
 exports.Face4 = Face4;
 exports.LineStrip = LineStrip;

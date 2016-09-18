@@ -1,5 +1,6 @@
 import { _Math } from './Math';
 import { Vector3 } from './Vector3';
+import { Vector3Up,Vector3Right,Vector3Forward} from '../constants';
 
 /**
  * @author mrdoob / http://mrdoob.com/
@@ -28,6 +29,98 @@ function Matrix4() {
 
 	this.origin = new Vector3();
 	Object.defineProperty(this, "origin", { writable:false } );
+
+	this.motion = null;
+        this.motion = {
+        	tick : 0,
+        	speed : new Vector3(),
+                acceleration : new Vector3(),
+                rotation : new Vector3(),
+                torque : new Vector3(),
+                mass : 1.0,
+                move : function( m, delta ) {
+					this.speed.addScaledVector( this.acceleration, delta );
+					var del = this.speed.clone().multiplyScalar( delta );
+
+					m.origin.addScaledVector( m.backward, -del.z );
+					m.origin.addScaledVector( m.up, del.y );
+					m.origin.addScaledVector( m.left, del.x );
+
+					this.rotation.addScaledVector( this.torque, delta );
+					var this_move = this.rotation.clone().multiplyScalar( delta )
+					m.rotateRelative( this_move.x, this_move.y, this_move.z );
+				},
+				rotate : function( m, delta ) {
+					var iterations = 1;
+
+					var max = Math.abs( this.rotation.x );
+					var tmp = Math.abs( this.rotation.y );
+					if( tmp > max ) {
+						max = tmp;
+						tmp = Math.abs( this.rotation.z );
+						if( tmp > max ) {
+							max = tmp;
+							while( ( ( max * delta ) / iterations ) > 0.1 )
+								iterations++;
+						} else {
+							while( ( ( max * delta ) / iterations ) > 0.1 )
+								iterations++;
+						}
+					} else {
+						tmp = Math.abs( this.rotation.z );
+						if( tmp > max ) {
+							max = tmp;
+							while( ( ( max * delta ) / iterations ) > 0.1 )
+								iterations++;
+						} else {
+							while( ( ( max * delta ) / iterations ) > 0.1 )
+								iterations++;
+						}
+					}
+					var delx = ( this.rotation.x * delta ) / iterations;
+					var dely = ( this.rotation.y * delta ) / iterations;
+					var delz = ( this.rotation.z * delta ) / iterations;
+					for( var n = 0; n < iterations; n++ ) {
+						m.rotateRelative( delx, dely, delz );
+					}
+					// delta = delta / 1000;
+					/*
+					   ** this is becoming a physics engine frame...
+					   ** might as well just add that.
+                	var delta_accel = this.acceleration.clone().multiplyScalar(delta);
+					if( ( this.rotation.x > ( Math.PI / 4 ) )
+					   ||( this.rotation.x < -( Math.PI / 4 ) )
+					   ||( this.rotation.y > ( Math.PI / 4 ) )
+					   ||( this.rotation.y < -( Math.PI / 4 ) )
+					   ||( this.rotation.z > ( Math.PI / 4 ) )
+					   ||( this.rotation.z < -( Math.PI / 4 ) )
+					   ){
+						   var max = this.rotation.x;
+						   if( max < this.rotation.y )
+						   	 max = this.rotation.y;
+						   if( max < this.rotation.z )
+						     max = this.rotation.z;
+						 var min = this.rotation.x;
+  						   if( min > this.rotation.y )
+  						   	 max = this.rotation.y;
+  						   if( min > this.rotation.z )
+  						     max = this.rotation.z;
+							if( min < 0 )
+								if( max < -min )
+									max = -min;
+							var t;
+							for( t = 1; t < 100; t++ )
+								if( ( max / t ) < ( Math.PI / 4 ))
+									break;
+
+							delta_accel.scale( 1 / t );
+					   }
+					  */
+				  }
+
+        };
+
+
 
 	this.tick = 0;
 
@@ -1134,6 +1227,18 @@ Matrix4.prototype = {
 	get backward() {
 			return new THREE.Vector3( -this.elements[8], -this.elements[9], -this.elements[10] );
         },
+	move : function (tick) {
+        	if( this.motion )
+				this.motion.move( this, tick );
+        	//this.origin.addScaledVector( this.forward, z ).addScaledVector( this.up, y ).addScaledVector( this.left, x )
+		},
+	moveNow : function ( x,y,z ) { this.origin.addScaledVector( this.forward, z ).addScaledVector( this.up, y ).addScaledVector( this.left, x ) },
+	moveForward : function ( n ) { this.origin.addScaledVector( this.forward, n ); },
+	moveUp : function ( n ) { this.origin.addScaledVector( this.up, n ); },
+	moveLeft : function ( n ) { this.origin.addScaledVector( this.left, n ); },
+	moveBackward : function ( n ) { this.origin.addScaledVector( this.backward, n ); },
+	moveDown : function ( n ) { this.origin.addScaledVector( this.down, n ); },
+	moveRight : function ( n ) { this.origin.addScaledVector( this.right, n ); },
 
 	get inv_left() {
         	return new THREE.Vector3( this.elements[0], this.elements[4], this.elements[8] );
@@ -1158,13 +1263,13 @@ Matrix4.prototype = {
 		return Math.asin( this.forward.dot( relativeRight ) );
 	},
 	get roll( ) {
-		return this.getRoll( THREE.Vector3Up );
+		return this.getRoll( Vector3Up );
 	},
 	get pitch( ) {
-		return this.getPitch( THREE.Vector3Forward );
+		return this.getPitch( Vector3Forward );
 	},
 	get yaw() {
-		return this.getYaw( THREE.Vector3Right );
+		return this.getYaw( Vector3Right );
 	},
 
 };
