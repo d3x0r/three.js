@@ -782,27 +782,27 @@ Vector3.prototype = {
 
 };
 
-THREE.Vector3Unit = new THREE.Vector3( 1, 1, 1 );
-THREE.Vector3Zero = new THREE.Vector3( 0, 0, 0 );
-THREE.Vector3Right = new THREE.Vector3( -1, 0, 0 );
-THREE.Vector3Backward = new THREE.Vector3( 0, 0, 1 );
-THREE.Vector3Up = new THREE.Vector3( 0, 1, 0 );
-THREE.Vector3Left = new THREE.Vector3( 1, 0, 0 );
-THREE.Vector3Forward = new THREE.Vector3( 0, 0, -1 );
-THREE.Vector3Down = new THREE.Vector3( 0, -1, 0 );
+export const Vector3Unit = new Vector3( 1, 1, 1 );
+export const Vector3Zero = new Vector3( 0, 0, 0 );
+export const Vector3Right = new Vector3( -1, 0, 0 );
+export const Vector3Backward = new Vector3( 0, 0, 1 );
+export const Vector3Up = new Vector3( 0, 1, 0 );
+export const Vector3Left = new Vector3( 1, 0, 0 );
+export const Vector3Forward = new Vector3( 0, 0, -1 );
+export const Vector3Down = new Vector3( 0, -1, 0 );
 
-["Vector3Unit"
-,"Vector3Zero"
-,"Vector3Right"
-,"Vector3Backward"
-,"Vector3Up"
-,"Vector3Left"
-,"Vector3Forward"
-,"Vector3Down"].forEach( function(key){
-	Object.defineProperty(THREE, key, { writable: false })
-	Object.defineProperty(THREE[key], "x", { writable: false })
-	Object.defineProperty(THREE[key], "y", { writable: false })
-	Object.defineProperty(THREE[key], "z", { writable: false })
+[Vector3Unit
+,Vector3Zero
+,Vector3Right
+,Vector3Backward
+,Vector3Up
+,Vector3Left
+,Vector3Forward
+,Vector3Down].forEach( function(key){
+	//Object.defineProperty(THREE, key, { writable: false })
+	Object.defineProperty(key, "x", { writable: false })
+	Object.defineProperty(key, "y", { writable: false })
+	Object.defineProperty(key, "z", { writable: false })
 })
 
 

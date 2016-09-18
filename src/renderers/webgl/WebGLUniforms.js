@@ -183,14 +183,14 @@ function setValue3fm( gl, v ) {
 
 function setValue4fm( gl, v ) {
 
-	gl.uniformMatrix4fv( this.addr, false, v.elements || v );
 
-}
 			if( v.elements ){
 				v.elements[12] = v.origin.x;
 				v.elements[13] = v.origin.y;
 				v.elements[14] = v.origin.z;
 			}
+	gl.uniformMatrix4fv( this.addr, false, v.elements || v );
+}
 // Single texture (2D / Cube)
 
 function setValueT1( gl, v, renderer ) {

@@ -26,7 +26,7 @@ function Matrix4() {
 	] );
 	Object.defineProperty(this, "elements", { writable:false } );
 
-	this.origin = new THREE.Vector3();
+	this.origin = new Vector3();
 	Object.defineProperty(this, "origin", { writable:false } );
 
 	this.tick = 0;
