@@ -392,13 +392,15 @@ function Matrix4() {
 					this.speed.addScaledVector( this.acceleration, delta );
 					var del = this.speed.clone().multiplyScalar( delta );
 
-					m.origin.addScaledVector( m.backward, -del.z );
+					m.origin.addScaledVector( m.forward, del.z );
 					m.origin.addScaledVector( m.up, del.y );
 					m.origin.addScaledVector( m.left, del.x );
 
 					this.rotation.addScaledVector( this.torque, delta );
 					var this_move = this.rotation.clone().multiplyScalar( delta )
 					m.rotateRelative( this_move.x, this_move.y, this_move.z );
+					this_move.delete();
+					del.delete();
 				},
 				rotate : function( m, delta ) {
 					var iterations = 1;
@@ -1039,10 +1041,10 @@ Matrix4.prototype = {
 	setPosition: function ( v ) {
 		if( this.origin === v ) throw "setting to self"
 		var te = this.elements;
-
-		this.origin.x = v.x;
-		this.origin.y = v.y;
-		this.origin.z = v.z;
+		
+		te[12] = this.origin.x = v.x;
+		te[13] = this.origin.y = v.y;
+		te[14] = this.origin.z = v.z;
 
 		return this;
 
@@ -1572,10 +1574,10 @@ Matrix4.prototype = {
 			return new THREE.Vector3( -this.elements[4], -this.elements[5], -this.elements[6] );
         },
 	get forward() {
-        	return new THREE.Vector3( this.elements[8], this.elements[9], this.elements[10] );
+        	return new THREE.Vector3( -this.elements[8], -this.elements[9], -this.elements[10] );
         },
 	get backward() {
-			return new THREE.Vector3( -this.elements[8], -this.elements[9], -this.elements[10] );
+			return new THREE.Vector3( this.elements[8], this.elements[9], this.elements[10] );
         },
 	move : function (tick) {
         	if( this.motion )
@@ -3139,14 +3141,14 @@ var RGBDEncoding = 3006;
 var BasicDepthPacking = 3200;
 var RGBADepthPacking = 3201;
 
-const Vector3Unit = new        Vector3( 1, 1, 1 );
-const Vector3Zero = new        Vector3( 0, 0, 0 );
-const Vector3Right = new        Vector3( -1, 0, 0 );
-const Vector3Backward = new Vector3       ( 0, 0, 1 );
-const Vector3Up = new Vector3( 0, 1, 0 );
-const Vector3Left = new Vector3( 1, 0, 0 );
-const Vector3Forward = new Vector3( 0, 0, -1 );
-const Vector3Down = new Vector3( 0, -1, 0 );
+var Vector3Unit = new        Vector3( 1, 1, 1 );
+var Vector3Zero = new        Vector3( 0, 0, 0 );
+var Vector3Right = new        Vector3( -1, 0, 0 );
+var Vector3Backward = new Vector3       ( 0, 0, 1 );
+var Vector3Up = new Vector3( 0, 1, 0 );
+var Vector3Left = new Vector3( 1, 0, 0 );
+var Vector3Forward = new Vector3( 0, 0, -1 );
+var Vector3Down = new Vector3( 0, -1, 0 );
 
 
 [Vector3Unit
@@ -6335,11 +6337,36 @@ function Vector4( x, y, z, w ) {
 
 }
 
+var Vector4Pool = {
+	new : function(x,y,z,w) {
+		var r = vectorPool$1.pop();
+		if( r ) {
+			r.x = x;
+			r.y = y;
+			r.z = z;
+			r.w = w;
+		}
+		else{
+			r = new Vector4(x,y,z,w);
+		}
+		return r;
+	}
+}
+
+var vectorPool$1 = [];
+
+
 Vector4.prototype = {
 
 	constructor: Vector4,
 
 	isVector4: true,
+
+	delete: function() { 
+
+		vectorPool$1.push( this ); 
+
+	},
 
 	set: function ( x, y, z, w ) {
 
@@ -42019,7 +42046,9 @@ exports.Box2 = Box2;
 exports.Line3 = Line3;
 exports.Euler = Euler;
 exports.Vector4 = Vector4;
+exports.Vector4Pool = Vector4Pool;
 exports.Vector3 = Vector3;
+exports.Vector3Pool = Vector3Pool;
 exports.Vector2 = Vector2;
 exports.Quaternion = Quaternion;
 exports.Color = Color;

@@ -126,14 +126,14 @@ export var RGBDEncoding = 3006;
 export var BasicDepthPacking = 3200;
 export var RGBADepthPacking = 3201;
 
-export const Vector3Unit = new        Vector3( 1, 1, 1 );
-export const Vector3Zero = new        Vector3( 0, 0, 0 );
-export const Vector3Right = new        Vector3( -1, 0, 0 );
-export const Vector3Backward = new Vector3       ( 0, 0, 1 );
-export const Vector3Up = new Vector3( 0, 1, 0 );
-export const Vector3Left = new Vector3( 1, 0, 0 );
-export const Vector3Forward = new Vector3( 0, 0, -1 );
-export const Vector3Down = new Vector3( 0, -1, 0 );
+export var Vector3Unit = new        Vector3( 1, 1, 1 );
+export var Vector3Zero = new        Vector3( 0, 0, 0 );
+export var Vector3Right = new        Vector3( -1, 0, 0 );
+export var Vector3Backward = new Vector3       ( 0, 0, 1 );
+export var Vector3Up = new Vector3( 0, 1, 0 );
+export var Vector3Left = new Vector3( 1, 0, 0 );
+export var Vector3Forward = new Vector3( 0, 0, -1 );
+export var Vector3Down = new Vector3( 0, -1, 0 );
 
 
 [Vector3Unit

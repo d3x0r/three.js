@@ -15,11 +15,36 @@ function Vector4( x, y, z, w ) {
 
 }
 
+export var Vector4Pool = {
+	new : function(x,y,z,w) {
+		var r = vectorPool.pop();
+		if( r ) {
+			r.x = x;
+			r.y = y;
+			r.z = z;
+			r.w = w;
+		}
+		else{
+			r = new Vector4(x,y,z,w);
+		}
+		return r;
+	}
+}
+
+var vectorPool = [];
+
+
 Vector4.prototype = {
 
 	constructor: Vector4,
 
 	isVector4: true,
+
+	delete: function() { 
+
+		vectorPool.push( this ); 
+
+	},
 
 	set: function ( x, y, z, w ) {
 
@@ -628,3 +653,4 @@ Vector4.prototype = {
 
 
 export { Vector4 };
+
