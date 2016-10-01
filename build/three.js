@@ -3178,14 +3178,14 @@ var RGBDEncoding = 3006;
 var BasicDepthPacking = 3200;
 var RGBADepthPacking = 3201;
 
-var Vector3Unit = new        Vector3( 1, 1, 1 );
-var Vector3Zero = new        Vector3( 0, 0, 0 );
-var Vector3Right = new        Vector3( -1, 0, 0 );
-var Vector3Backward = new Vector3       ( 0, 0, 1 );
-var Vector3Up = new Vector3( 0, 1, 0 );
-var Vector3Left = new Vector3( 1, 0, 0 );
-var Vector3Forward = new Vector3( 0, 0, -1 );
-var Vector3Down = new Vector3( 0, -1, 0 );
+var Vector3Unit = new      Vector3(  1,  1,  1 );
+var Vector3Zero = new      Vector3(  0,  0,  0 );
+var Vector3Right = new     Vector3( -1,  0,  0 );
+var Vector3Backward = new  Vector3(  0,  0,  1 );
+var Vector3Up = new        Vector3(  0,  1,  0 );
+var Vector3Left = new      Vector3(  1,  0,  0 );
+var Vector3Forward = new   Vector3(  0,  0, -1 );
+var Vector3Down = new      Vector3(  0, -1,  0 );
 
 
 [Vector3Unit
@@ -3196,7 +3196,7 @@ var Vector3Down = new Vector3( 0, -1, 0 );
 ,Vector3Left
 ,Vector3Forward
 ,Vector3Down].forEach( function(key){
-	//Object.defineProperty(Vector3, key, { writable: false })
+	Object.freeze(key)
 	Object.defineProperty(key, "x", { writable: false })
 	Object.defineProperty(key, "y", { writable: false })
 	Object.defineProperty(key, "z", { writable: false })
