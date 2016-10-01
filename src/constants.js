@@ -1,5 +1,5 @@
 import { Vector3 } from './math/Vector3.js';
-export var REVISION = '81';
+export var REVISION = '81-d3x0r';
 export var MOUSE = { LEFT: 0, MIDDLE: 1, RIGHT: 2 };
 export var CullFaceNone = 0;
 export var CullFaceBack = 1;
