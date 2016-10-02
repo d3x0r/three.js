@@ -622,9 +622,35 @@ Vector4.prototype = {
 
 		return this;
 
-	}
+	},
+
+	delete: function() {
+
+		vectorPool.push( this );
+
+	},
 
 };
+
+
+export var Vector4Pool = {
+	new : function(x,y,z,w) {
+		var r = vectorPool.pop();
+		if( r ) {
+			r.x = x;
+			r.y = y;
+			r.z = z;
+			r.w = w;
+		}
+		else{
+			r = new Vector4(x,y,z,w);
+		}
+		return r;
+	}
+}
+
+var vectorPool = [];
+
 
 
 export { Vector4 };

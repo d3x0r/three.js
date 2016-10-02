@@ -97,7 +97,8 @@ Vector3.prototype = {
 
 	clone: function () {
 
-		return new this.constructor( this.x, this.y, this.z );
+		return Vector3Pool.new( this.x, this.y, this.z );
+		//return new this.constructor( this.x, this.y, this.z );
 
 	},
 
@@ -304,6 +305,20 @@ Vector3.prototype = {
 
 	},
 
+	applyMatrix4Inv: function ( m ) {
+
+		// input: THREE.Matrix4 affine matrix
+
+		var x = this.x, y = this.y, z = this.z;
+	  var e = m.elements;
+
+		this.x = e[ 0 ] * x + e[ 1 ] * y + e[ 2 ]  * z + e[ 12 ];
+		this.y = e[ 4 ] * x + e[ 5 ] * y + e[ 6 ]  * z + e[ 13 ];
+		this.z = e[ 8 ] * x + e[ 9 ] * y + e[ 10 ] * z + e[ 14 ];
+
+		return this;
+
+	},
 	applyProjection: function ( m ) {
 
 		// input: THREE.Matrix4 projection matrix
@@ -761,9 +776,32 @@ Vector3.prototype = {
 
 		return this;
 
-	}
+	},
+
+	delete : function() {
+		vectorPool.push( this );
+		return this;
+	},
 
 };
+
+
+export var Vector3Pool = {
+	new : function(x,y,z) {
+		var r = vectorPool.pop();
+		if( r ) {
+			r.x = x;
+			r.y = y;
+			r.z = z;
+		}
+		else{
+			r = new Vector3(x,y,z);
+		}
+		return r;
+	}
+}
+
+var vectorPool = [];
 
 
 export { Vector3 };

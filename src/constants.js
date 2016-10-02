@@ -1,4 +1,4 @@
-export var REVISION = '81';
+export var REVISION = '81-d3x0r';
 export var MOUSE = { LEFT: 0, MIDDLE: 1, RIGHT: 2 };
 export var CullFaceNone = 0;
 export var CullFaceBack = 1;
@@ -154,3 +154,29 @@ export var RGBM16Encoding = 3005;
 export var RGBDEncoding = 3006;
 export var BasicDepthPacking = 3200;
 export var RGBADepthPacking = 3201;
+
+
+import { Vector3 } from './math/Vector3.js';
+export var Vector3Unit = new      Vector3(  1,  1,  1 );
+export var Vector3Zero = new      Vector3(  0,  0,  0 );
+export var Vector3Right = new     Vector3( -1,  0,  0 );
+export var Vector3Backward = new  Vector3(  0,  0,  1 );
+export var Vector3Up = new        Vector3(  0,  1,  0 );
+export var Vector3Left = new      Vector3(  1,  0,  0 );
+export var Vector3Forward = new   Vector3(  0,  0, -1 );
+export var Vector3Down = new      Vector3(  0, -1,  0 );
+
+
+[Vector3Unit
+,Vector3Zero
+,Vector3Right
+,Vector3Backward
+,Vector3Up
+,Vector3Left
+,Vector3Forward
+,Vector3Down].forEach( function(key){
+	Object.freeze(key)
+	Object.defineProperty(key, "x", { writable: false })
+	Object.defineProperty(key, "y", { writable: false })
+	Object.defineProperty(key, "z", { writable: false })
+})
