@@ -11005,7 +11005,8 @@ function Object3D() {
 	Object.defineProperties( this, {
 		position: {
 			enumerable: true,
-			value: position
+			//value: position
+			get: function () { return this.matrix.origin; },
 		},
 		rotation: {
 			enumerable: true,
@@ -20645,6 +20646,13 @@ function WebGLRenderer( parameters ) {
 		} else {
 
 			renderer = bufferRenderer;
+
+		}
+
+		if( geometry.uniforms ) {
+
+			var p_uniforms = program.getUniforms()
+			Object.keys(geometry.uniforms).forEach( function(key){ p_uniforms.setValue( _gl, key, geometry.uniforms[key] );} );
 
 		}
 

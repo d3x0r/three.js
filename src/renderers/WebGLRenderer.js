@@ -799,6 +799,13 @@ function WebGLRenderer( parameters ) {
 
 		}
 
+		if( geometry.uniforms ) {
+
+			var p_uniforms = program.getUniforms()
+			Object.keys(geometry.uniforms).forEach( function(key){ p_uniforms.setValue( _gl, key, geometry.uniforms[key] );} );
+
+		}
+
 		if ( updateBuffers ) {
 
 			setupVertexAttributes( material, program, geometry );

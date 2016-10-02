@@ -52,7 +52,8 @@ function Object3D() {
 	Object.defineProperties( this, {
 		position: {
 			enumerable: true,
-			value: position
+			//value: position
+			get: function () { return this.matrix.origin; },
 		},
 		rotation: {
 			enumerable: true,
