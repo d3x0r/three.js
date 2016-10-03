@@ -52,8 +52,10 @@ function Object3D() {
 	Object.defineProperties( this, {
 		position: {
 			enumerable: true,
-			//value: position
-			get: function () { return this.matrix.origin; },
+			value: position
+			/*get: ()=>{
+					return this.matrix.origin
+				},*/
 		},
 		rotation: {
 			enumerable: true,
@@ -92,7 +94,7 @@ function Object3D() {
 
 	this.userData = {};
 
-	this.onBeforeRender = function(){}; 
+	this.onBeforeRender = function(){};
 	this.onAfterRender = function(){};
 
 }
