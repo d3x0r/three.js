@@ -53,9 +53,6 @@ function Object3D() {
 		position: {
 			enumerable: true,
 			value: position
-			/*get: ()=>{
-					return this.matrix.origin
-				},*/
 		},
 		rotation: {
 			enumerable: true,
