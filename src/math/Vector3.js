@@ -310,7 +310,7 @@ Vector3.prototype = {
 		// input: THREE.Matrix4 affine matrix
 
 		var x = this.x, y = this.y, z = this.z;
-	  var e = m.elements;
+		var e = m.elements;
 
 		this.x = e[ 0 ] * x + e[ 1 ] * y + e[ 2 ]  * z + e[ 12 ];
 		this.y = e[ 4 ] * x + e[ 5 ] * y + e[ 6 ]  * z + e[ 13 ];

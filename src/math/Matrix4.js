@@ -1100,24 +1100,7 @@ Matrix4.prototype = {
 
 		return array;
 
-	},
-
-/*
-	INLINEFUNC( void, Rotate, ( RCOORD dAngle, P_POINT vaxis1, P_POINT vaxis2 ) )
-	{
-	   _POINT v1, v2;
-	   _POINT vsave;
-	   RCOORD dsin = (RCOORD)SIN( dAngle )
-	   	  , dcos = (RCOORD)COS( dAngle );
-	   MemCpy( vsave, vaxis1, sizeof( _POINT ) );
-	   DOFUNC(scale)( v1, vaxis1, dcos );
-	   DOFUNC(scale)( v2, vaxis2, dsin );
-	   DOFUNC(sub)( vaxis1, v1, v2 );
-	   DOFUNC(scale)( v2, vsave, dsin );
-	   DOFUNC(scale)( v1, vaxis2, dcos );
-	   DOFUNC(add)( vaxis2, v2, v1 );
 	}
-*/
 
 
 	rotateOrtho: function( angle, axis1, axis2 ) {
