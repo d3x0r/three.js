@@ -14,6 +14,11 @@ function WebVRManager( renderer ) {
 	var device = null;
 	var frameData = null;
 
+	var poseTarget = null;
+
+	var standingMatrix = new Matrix4();
+	var standingMatrixInverse = new Matrix4();
+
 	if ( typeof window !== 'undefined' && 'VRFrameData' in window ) {
 
 		frameData = new window.VRFrameData();
@@ -21,9 +26,6 @@ function WebVRManager( renderer ) {
 	}
 
 	var matrixWorldInverse = new Matrix4();
-
-	var standingMatrix = new Matrix4();
-	var standingMatrixInverse = new Matrix4();
 
 	var cameraL = new PerspectiveCamera();
 	cameraL.bounds = new Vector4( 0.0, 0.0, 0.5, 1.0 );
@@ -71,7 +73,7 @@ function WebVRManager( renderer ) {
 	//
 
 	this.enabled = false;
-	this.standing = false;
+	this.userHeight = 1.6;
 
 	this.getDevice = function () {
 
@@ -82,6 +84,12 @@ function WebVRManager( renderer ) {
 	this.setDevice = function ( value ) {
 
 		if ( value !== undefined ) device = value;
+
+	};
+
+	this.setPoseTarget = function ( object ) {
+
+		if ( object !== undefined ) poseTarget = object;
 
 	};
 
@@ -97,36 +105,38 @@ function WebVRManager( renderer ) {
 		//
 
 		var pose = frameData.pose;
+		var poseObject = poseTarget !== null ? poseTarget : camera;
 
 		if ( pose.position !== null ) {
 
-			camera.position.fromArray( pose.position );
+			poseObject.position.fromArray( pose.position );
 
 		} else {
 
-			camera.position.set( 0, 0, 0 );
+			poseObject.position.set( 0, 0, 0 );
 
 		}
 
 		if ( pose.orientation !== null ) {
 
-			camera.quaternion.fromArray( pose.orientation );
+			poseObject.quaternion.fromArray( pose.orientation );
 
 		}
-
-		camera.updateMatrixWorld();
 
 		var stageParameters = device.stageParameters;
 
-		if ( this.standing && stageParameters ) {
+		if ( stageParameters ) {
 
 			standingMatrix.fromArray( stageParameters.sittingToStandingTransform );
-			standingMatrixInverse.getInverse( standingMatrix );
 
-			camera.matrixWorld.multiply( standingMatrix );
-			camera.matrixWorldInverse.multiply( standingMatrixInverse );
+		} else {
+
+			standingMatrix.makeTranslation( 0, scope.userHeight, 0 );
 
 		}
+
+		poseObject.position.applyMatrix4( standingMatrix );
+		poseObject.updateMatrixWorld();
 
 		if ( device.isPresenting === false ) return camera;
 
@@ -144,14 +154,14 @@ function WebVRManager( renderer ) {
 		cameraL.matrixWorldInverse.fromArray( frameData.leftViewMatrix );
 		cameraR.matrixWorldInverse.fromArray( frameData.rightViewMatrix );
 
-		if ( this.standing && stageParameters ) {
+		// TODO (mrdoob) Double check this code
 
-			cameraL.matrixWorldInverse.multiply( standingMatrixInverse );
-			cameraR.matrixWorldInverse.multiply( standingMatrixInverse );
+		standingMatrixInverse.getInverse( standingMatrix );
 
-		}
+		cameraL.matrixWorldInverse.multiply( standingMatrixInverse );
+		cameraR.matrixWorldInverse.multiply( standingMatrixInverse );
 
-		var parent = camera.parent;
+		var parent = poseObject.parent;
 
 		if ( parent !== null ) {
 
@@ -170,7 +180,7 @@ function WebVRManager( renderer ) {
 		cameraL.projectionMatrix.fromArray( frameData.leftProjectionMatrix );
 		cameraR.projectionMatrix.fromArray( frameData.rightProjectionMatrix );
 
-		// HACK @mrdoob
+		// HACK (mrdoob)
 		// https://github.com/w3c/webvr/issues/203
 
 		cameraVR.projectionMatrix.copy( cameraL.projectionMatrix );

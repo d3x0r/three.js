@@ -5,6 +5,7 @@
 /* global QUnit */
 
 import { Triangle } from '../../../../src/math/Triangle';
+import { Box3 } from '../../../../src/math/Box3';
 import { Vector3 } from '../../../../src/math/Vector3';
 import {
 	zero3,
@@ -14,7 +15,7 @@ import {
 
 export default QUnit.module( 'Maths', () => {
 
-	QUnit.module.todo( 'Triangle', () => {
+	QUnit.module( 'Triangle', () => {
 
 		// INSTANCING
 		QUnit.test( "Instancing", ( assert ) => {
@@ -32,19 +33,19 @@ export default QUnit.module( 'Maths', () => {
 		} );
 
 		// STATIC STUFF
-		QUnit.test( "normal", ( assert ) => {
+		QUnit.todo( "normal", ( assert ) => {
 
 			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		QUnit.test( "barycoordFromPoint", ( assert ) => {
+		QUnit.todo( "barycoordFromPoint", ( assert ) => {
 
 			assert.ok( false, "everything's gonna be alright" );
 
 		} );
 
-		QUnit.test( "containsPoint", ( assert ) => {
+		QUnit.todo( "containsPoint", ( assert ) => {
 
 			assert.ok( false, "everything's gonna be alright" );
 
@@ -74,7 +75,7 @@ export default QUnit.module( 'Maths', () => {
 
 		} );
 
-		QUnit.test( "clone", ( assert ) => {
+		QUnit.todo( "clone", ( assert ) => {
 
 			assert.ok( false, "everything's gonna be alright" );
 
@@ -216,6 +217,23 @@ export default QUnit.module( 'Maths', () => {
 			assert.ok( a.containsPoint( a.c ), "Passed!" );
 			assert.ok( a.containsPoint( a.midpoint() ), "Passed!" );
 			assert.ok( ! a.containsPoint( new Vector3( - 1, - 1, - 1 ) ), "Passed!" );
+
+		} );
+
+		QUnit.test( "intersectsBox", ( assert ) => {
+
+			var a = new Box3( one3.clone(), two3.clone() );
+			var b = new Triangle( new Vector3( 1.5, 1.5, 2.5 ), new Vector3( 2.5, 1.5, 1.5 ), new Vector3( 1.5, 2.5, 1.5 ) );
+			var c = new Triangle( new Vector3( 1.5, 1.5, 3.5 ), new Vector3( 3.5, 1.5, 1.5 ), new Vector3( 1.5, 1.5, 1.5 ) );
+			var d = new Triangle( new Vector3( 1.5, 1.75, 3 ), new Vector3( 3, 1.75, 1.5 ), new Vector3( 1.5, 2.5, 1.5 ) );
+			var e = new Triangle( new Vector3( 1.5, 1.8, 3 ), new Vector3( 3, 1.8, 1.5 ), new Vector3( 1.5, 2.5, 1.5 ) );
+			var f = new Triangle( new Vector3( 1.5, 2.5, 3 ), new Vector3( 3, 2.5, 1.5 ), new Vector3( 1.5, 2.5, 1.5 ) );
+
+			assert.ok( b.intersectsBox( a ), "Passed!" );
+			assert.ok( c.intersectsBox( a ), "Passed!" );
+			assert.ok( d.intersectsBox( a ), "Passed!" );
+			assert.ok( ! e.intersectsBox( a ), "Passed!" );
+			assert.ok( ! f.intersectsBox( a ), "Passed!" );
 
 		} );
 

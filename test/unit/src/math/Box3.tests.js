@@ -6,6 +6,7 @@
 
 import { Box3 } from '../../../../src/math/Box3';
 import { Sphere } from '../../../../src/math/Sphere';
+import { Triangle } from '../../../../src/math/Triangle';
 import { Plane } from '../../../../src/math/Plane';
 import { Vector3 } from '../../../../src/math/Vector3';
 import { Matrix4 } from '../../../../src/math/Matrix4';
@@ -33,7 +34,7 @@ function compareBox( a, b, threshold ) {
 
 export default QUnit.module( 'Maths', () => {
 
-	QUnit.module.todo( 'Box3', () => {
+	QUnit.module( 'Box3', () => {
 
 		// INSTANCING
 		QUnit.test( "Instancing", ( assert ) => {
@@ -53,7 +54,7 @@ export default QUnit.module( 'Maths', () => {
 		} );
 
 		// PUBLIC STUFF
-		QUnit.test( "isBox3", ( assert ) => {
+		QUnit.todo( "isBox3", ( assert ) => {
 
 			assert.ok( false, "everything's gonna be alright" );
 
@@ -69,7 +70,7 @@ export default QUnit.module( 'Maths', () => {
 
 		} );
 
-		QUnit.test( "setFromArray", ( assert ) => {
+		QUnit.todo( "setFromArray", ( assert ) => {
 
 			assert.ok( false, "everything's gonna be alright" );
 
@@ -152,7 +153,7 @@ export default QUnit.module( 'Maths', () => {
 
 		} );
 
-		QUnit.test( "clone", ( assert ) => {
+		QUnit.todo( "clone", ( assert ) => {
 
 			assert.ok( false, "everything's gonna be alright" );
 
@@ -187,7 +188,7 @@ export default QUnit.module( 'Maths', () => {
 
 		} );
 
-		QUnit.test( "isEmpty", ( assert ) => {
+		QUnit.todo( "isEmpty", ( assert ) => {
 
 			assert.ok( false, "everything's gonna be alright" );
 
@@ -390,6 +391,23 @@ export default QUnit.module( 'Maths', () => {
 
 		} );
 
+		QUnit.test( "intersectsTriangle", ( assert ) => {
+
+			var a = new Box3( one3.clone(), two3.clone() );
+			var b = new Triangle( new Vector3( 1.5, 1.5, 2.5 ), new Vector3( 2.5, 1.5, 1.5 ), new Vector3( 1.5, 2.5, 1.5 ) );
+			var c = new Triangle( new Vector3( 1.5, 1.5, 3.5 ), new Vector3( 3.5, 1.5, 1.5 ), new Vector3( 1.5, 1.5, 1.5 ) );
+			var d = new Triangle( new Vector3( 1.5, 1.75, 3 ), new Vector3( 3, 1.75, 1.5 ), new Vector3( 1.5, 2.5, 1.5 ) );
+			var e = new Triangle( new Vector3( 1.5, 1.8, 3 ), new Vector3( 3, 1.8, 1.5 ), new Vector3( 1.5, 2.5, 1.5 ) );
+			var f = new Triangle( new Vector3( 1.5, 2.5, 3 ), new Vector3( 3, 2.5, 1.5 ), new Vector3( 1.5, 2.5, 1.5 ) );
+
+			assert.ok( a.intersectsTriangle( b ), "Passed!" );
+			assert.ok( a.intersectsTriangle( c ), "Passed!" );
+			assert.ok( a.intersectsTriangle( d ), "Passed!" );
+			assert.ok( ! a.intersectsTriangle( e ), "Passed!" );
+			assert.ok( ! a.intersectsTriangle( f ), "Passed!" );
+
+		} );
+
 		QUnit.test( "clampPoint", ( assert ) => {
 
 			var a = new Box3( zero3.clone(), zero3.clone() );
@@ -495,7 +513,7 @@ export default QUnit.module( 'Maths', () => {
 
 		} );
 
-		QUnit.test( "equals", ( assert ) => {
+		QUnit.todo( "equals", ( assert ) => {
 
 			assert.ok( false, "everything's gonna be alright" );
 
