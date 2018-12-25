@@ -1,4 +1,5 @@
-import { Vector3 } from './Vector3.js';
+import { Vector3, Vector3Pool } from './Vector3.js';
+import { Vector3Up, Vector3Forward, Vector3Right } from "../constants.js";
 
 /**
  * @author mrdoob / http://mrdoob.com/
@@ -930,7 +931,7 @@ Object.assign( Matrix4.prototype, {
 
 		return array;
 
-	}
+	},
 
 
 	rotateOrtho( angle, axis1, axis2 ) {
@@ -1072,16 +1073,16 @@ Object.assign( Matrix4.prototype, {
 	moveRight  ( n ) { this.origin.addScaledVector( this.right, n ); },
 
 
-	getRoll = function( relativeUp ) {
-		//if( !relativeUp ) relativeUp = THREE.Vector3Up;
+	getRoll( relativeUp ) {
+		//if( !relativeUp ) relativeUp = Vector3Up;
 		return Math.asin( this.right.dot( relativeUp ) );
 	},
-	getPitch = function( relativeForward ) {
-		//if( !relativeForward ) relativeForward = THREE.Vector3Forward;
+	getPitch( relativeForward ) {
+		//if( !relativeForward ) relativeForward = Vector3Forward;
 		return Math.asin( this.up.dot( relativeForward ) );
 	},
-	getYaw = function( relativeRight ) {
-		//if( !relativeRight ) relativeRight = THREE.Vector3Right;
+	getYaw( relativeRight ) {
+		//if( !relativeRight ) relativeRight = Vector3Right;
 		return Math.asin( this.forward.dot( relativeRight ) );
 	},
 
@@ -1089,53 +1090,54 @@ Object.assign( Matrix4.prototype, {
 
 } );
 
-THREE.Matrix4.prototype.__defineGetter__( "inv_left", function(){
+Matrix4.prototype.__defineGetter__( "inv_left", function(){
 	return Vector3Pool.new( this.elements[0], this.elements[4], this.elements[8] );
 } );
-THREE.Matrix4.prototype.__defineGetter__( "inv_up", function(){
+Matrix4.prototype.__defineGetter__( "inv_up", function(){
 	return Vector3Pool.new( this.elements[1], this.elements[5], this.elements[9] );
 } );
-THREE.Matrix4.prototype.__defineGetter__( "inv_forward", function(){
+Matrix4.prototype.__defineGetter__( "inv_forward", function(){
 	return Vector3Pool.new( this.elements[2], this.elements[6], this.elements[10] );
 } );
 
-THREE.Matrix4.prototype.__defineGetter__( "roll", function(){
-	return this.getRoll( THREE.Vector3Up );
+
+Matrix4.prototype.__defineGetter__( "roll", function(){
+	return this.getRoll( Vector3Up );
 } );
-THREE.Matrix4.prototype.__defineGetter__( "pitch", function(){
-	return this.getPitch( THREE.Vector3Forward );
+Matrix4.prototype.__defineGetter__( "pitch", function(){
+	return this.getPitch( Vector3Forward );
 } );
-THREE.Matrix4.prototype.__defineGetter__( "yaw", function(){
-	return this.getYaw( THREE.Vector3Right );
+Matrix4.prototype.__defineGetter__( "yaw", function(){
+	return this.getYaw( Vector3Right );
 } );
 
-THREE.Matrix4.prototype.__defineGetter__( "left", function(){
-	return THREE.Vector3Pool.new( this.elements[0], this.elements[1], this.elements[2] );
+Matrix4.prototype.__defineGetter__( "left", function(){
+	return Vector3Pool.new( this.elements[0], this.elements[1], this.elements[2] );
 } );
-THREE.Matrix4.prototype.__defineGetter__( "right", function(){
-	return THREE.Vector3Pool.new( -this.elements[0], -this.elements[1], -this.elements[2] );
+Matrix4.prototype.__defineGetter__( "right", function(){
+	return Vector3Pool.new( -this.elements[0], -this.elements[1], -this.elements[2] );
 } );
-THREE.Matrix4.prototype.__defineGetter__( "up", function(){
-	return THREE.Vector3Pool.new( this.elements[4], this.elements[5], this.elements[6] );
+Matrix4.prototype.__defineGetter__( "up", function(){
+	return Vector3Pool.new( this.elements[4], this.elements[5], this.elements[6] );
 } );
-THREE.Matrix4.prototype.__defineGetter__( "down", function(){
-	return THREE.Vector3Pool.new( -this.elements[4], -this.elements[5], -this.elements[6] );
+Matrix4.prototype.__defineGetter__( "down", function(){
+	return Vector3Pool.new( -this.elements[4], -this.elements[5], -this.elements[6] );
 } );
-THREE.Matrix4.prototype.__defineGetter__( "forward", function(){
-	return THREE.Vector3Pool.new( -this.elements[8], -this.elements[9], -this.elements[10] );
+Matrix4.prototype.__defineGetter__( "forward", function(){
+	return Vector3Pool.new( -this.elements[8], -this.elements[9], -this.elements[10] );
 } );
-THREE.Matrix4.prototype.__defineGetter__( "backward", function(){
-	return THREE.Vector3Pool.new( this.elements[8], this.elements[9], this.elements[10] );
+Matrix4.prototype.__defineGetter__( "backward", function(){
+	return Vector3Pool.new( this.elements[8], this.elements[9], this.elements[10] );
 } );
 
-THREE.Matrix4.prototype.__defineGetter__( "motion", function(){
+Matrix4.prototype.__defineGetter__( "motion", function(){
 	if( !this._motion ){
         this._motion = {
         	tick : 0,
-        	speed : new THREE.Vector3(),
-                acceleration : new THREE.Vector3(),
-                rotation : new THREE.Vector3(),
-                torque : new THREE.Vector3(),
+        	speed : new Vector3(),
+                acceleration : new Vector3(),
+                rotation : new Vector3(),
+                torque : new Vector3(),
                 mass : 1.0,
                 move : function( m, delta ) {
 					this.speed.addScaledVector( this.acceleration, delta );
@@ -1293,10 +1295,10 @@ THREE.Matrix4.prototype.__defineGetter__( "motion", function(){
 	return this._motion;
 } );
 
-THREE.Matrix4.prototype.__defineGetter__( "origin", function(){
+Matrix4.prototype.__defineGetter__( "origin", function(){
 	if( !this._origin ){
 		var self = this;
-		this._origin = new THREE.Vector3();
+		this._origin = new Vector3();
 		Object.defineProperty(this, "_origin", { writable:false } );
 		Object.defineProperty( this._origin, "x", {
 			get : function(){
@@ -1326,10 +1328,10 @@ THREE.Matrix4.prototype.__defineGetter__( "origin", function(){
 	return this._origin;
 } );
 
-THREE.Matrix4.prototype.__defineSetter__( "origin", function(v){
+Matrix4.prototype.__defineSetter__( "origin", function(v){
 	if( !this._origin ){
 		var self = this;
-		this._origin = new THREE.Vector3();
+		this._origin = new Vector3();
 		Object.defineProperty(this, "_origin", { writable:false } );
 		Object.defineProperty( this._origin, "x", {
 			get : function(){

@@ -16,7 +16,7 @@ function Vector4( x, y, z, w ) {
 }
 
 var vector4Pool = [];
-export Vector4Pool = {
+const Vector4Pool = {
 	new : function(x,y,z,w) {
 		var r = vector4Pool.pop();
 		if( r ) {
@@ -26,11 +26,12 @@ export Vector4Pool = {
 			r.w = w;
 		}
 		else{
-			r = new THREE.Vector4(x,y,z,w);
+			r = new Vector4(x,y,z,w);
 		}
 		return r;
 	}
 }
+export { Vector4Pool };
 
 
 Object.assign( Vector4.prototype, {

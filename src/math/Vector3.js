@@ -20,7 +20,7 @@ function Vector3( x, y, z ) {
 }
 
 var vector3Pool = [];
-export Vector3Pool = {
+const Vector3Pool = {
 	new : function(x,y,z) {
 		var r = vector3Pool.pop();
 		if( r ) {
@@ -29,11 +29,12 @@ export Vector3Pool = {
 			r.z = z;
 		}
 		else{
-			r = new THREE.Vector3(x,y,z);
+			r = new Vector3(x,y,z);
 		}
 		return r;
 	}
 }
+export { Vector3Pool }
 
 
 Object.assign( Vector3.prototype, {
