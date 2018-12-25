@@ -142,3 +142,26 @@ export var BasicDepthPacking = 3200;
 export var RGBADepthPacking = 3201;
 export var TangentSpaceNormalMap = 0;
 export var ObjectSpaceNormalMap = 1;
+
+export const Vector3Unit = new      THREE.Vector3(  1,  1,  1 );
+export const Vector3Zero = new      THREE.Vector3(  0,  0,  0 );
+export const Vector3Right = new     THREE.Vector3( -1,  0,  0 );
+export const Vector3Backward = new  THREE.Vector3(  0,  0,  1 );
+export const Vector3Up = new        THREE.Vector3(  0,  1,  0 );
+export const Vector3Left = new      THREE.Vector3(  1,  0,  0 );
+export const Vector3Forward = new   THREE.Vector3(  0,  0, -1 );
+export const Vector3Down = new      THREE.Vector3(  0, -1,  0 );
+
+["Vector3Unit"
+,"Vector3Zero"
+,"Vector3Right"
+,"Vector3Backward"
+,"Vector3Up"
+,"Vector3Left"
+,"Vector3Forward"
+,"Vector3Down"].forEach( function(key){
+	Object.freeze(THREE[key])
+	Object.defineProperty(THREE[key], "x", { writable: false })
+	Object.defineProperty(THREE[key], "y", { writable: false })
+	Object.defineProperty(THREE[key], "z", { writable: false })
+})

@@ -19,9 +19,31 @@ function Vector3( x, y, z ) {
 
 }
 
+var vector3Pool = [];
+export Vector3Pool = {
+	new : function(x,y,z) {
+		var r = vector3Pool.pop();
+		if( r ) {
+			r.x = x;
+			r.y = y;
+			r.z = z;
+		}
+		else{
+			r = new THREE.Vector3(x,y,z);
+		}
+		return r;
+	}
+}
+
+
 Object.assign( Vector3.prototype, {
 
 	isVector3: true,
+
+	delete() {
+		vector3Pool.push( this );
+		return this;
+	},
 
 	set: function ( x, y, z ) {
 

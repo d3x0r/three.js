@@ -15,7 +15,29 @@ function Vector4( x, y, z, w ) {
 
 }
 
+var vector4Pool = [];
+export Vector4Pool = {
+	new : function(x,y,z,w) {
+		var r = vector4Pool.pop();
+		if( r ) {
+			r.x = x;
+			r.y = y;
+			r.z = z;
+			r.w = w;
+		}
+		else{
+			r = new THREE.Vector4(x,y,z,w);
+		}
+		return r;
+	}
+}
+
+
 Object.assign( Vector4.prototype, {
+	delete() {
+	    vector4Pool.push( this );
+	    return this;
+	},
 
 	isVector4: true,
 
